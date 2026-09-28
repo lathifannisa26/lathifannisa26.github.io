@@ -4,127 +4,497 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Limit Fungsi - Kalkulus Diferensial</title>
+<title>Limit Fungsi | Kalkulus Diferensial</title>
 
 <script>
 window.MathJax = {
-  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
 };
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f5f7fb;
-    margin: 0;
-    color: #222;
+:root{
+    --bg:#f4f7fb;
+    --surface:#ffffff;
+    --primary:#1f4e79;
+    --primary-soft:#e9f1f8;
+    --accent:#2f80ed;
+    --success:#198754;
+    --danger:#c0392b;
+    --warning:#d68910;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#dfe6ee;
+    --shadow:0 10px 28px rgba(31,78,121,.08);
 }
 
-header {
-    background: #16324f;
-    color: white;
-    padding: 28px;
-    text-align: center;
+*{
+    box-sizing:border-box;
 }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 25px;
+html{
+    scroll-behavior:smooth;
 }
 
-.card {
-    background: white;
-    padding: 25px;
-    margin-bottom: 22px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+body{
+    margin:0;
+    font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
 }
 
-h2 {
-    color: #16324f;
+/* =========================
+   HEADER
+========================= */
+
+.topbar{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:20;
 }
 
-.formula {
-    text-align: center;
-    font-size: 24px;
-    margin: 20px 0;
+.nav{
+    max-width:1180px;
+    margin:auto;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
 }
 
-.controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+.brand{
+    font-weight:800;
+    color:var(--primary);
+    font-size:18px;
 }
 
-.control-box {
-    background: #f4f7fa;
-    padding: 18px;
-    border-radius: 10px;
+.navlinks{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
 }
 
-input[type="range"] {
-    width: 100%;
+.navlinks a{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14px;
 }
 
-.value {
-    font-size: 20px;
-    font-weight: bold;
+.navlinks a:hover{
+    color:var(--primary);
 }
 
-canvas {
-    width: 100%;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    max-width:1180px;
+    margin:38px auto 26px;
+    padding:0 24px;
 }
 
-button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 15px;
-    margin-right: 8px;
+.hero-card{
+    background:
+        linear-gradient(
+            135deg,
+            #173b5f 0%,
+            #1f4e79 55%,
+            #2f80ed 100%
+        );
+    color:white;
+    border-radius:24px;
+    padding:44px;
+    box-shadow:var(--shadow);
 }
 
-.play {
-    background: #1d6f42;
-    color: white;
+.badge{
+    display:inline-block;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.25);
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    margin-bottom:14px;
 }
 
-.pause {
-    background: #d89b00;
-    color: white;
+.hero h1{
+    margin:0 0 12px;
+    font-size:42px;
+    line-height:1.15;
 }
 
-.reset {
-    background: #b83b3b;
-    color: white;
+.hero p{
+    max-width:760px;
+    margin:0;
+    font-size:17px;
+    color:rgba(255,255,255,.88);
 }
 
-.status {
-    padding: 16px;
-    margin-top: 18px;
-    border-radius: 8px;
-    font-weight: bold;
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    max-width:1180px;
+    margin:auto;
+    padding:0 24px 60px;
 }
 
-.success {
-    background: #dff5e6;
-    color: #146c3a;
+.section-title{
+    margin:42px 0 18px;
 }
 
-.fail {
-    background: #fde2e2;
-    color: #9c2525;
+.section-title span{
+    color:var(--accent);
+    font-weight:700;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
 }
 
-@media(max-width:700px) {
-    .controls {
-        grid-template-columns: 1fr;
+.section-title h2{
+    margin:4px 0 6px;
+    color:var(--primary);
+    font-size:29px;
+}
+
+.section-title p{
+    margin:0;
+    color:var(--muted);
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:26px;
+    box-shadow:var(--shadow);
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.definition-box{
+    background:var(--primary-soft);
+    border-left:5px solid var(--primary);
+    padding:22px;
+    border-radius:14px;
+}
+
+.formula{
+    text-align:center;
+    font-size:21px;
+    margin:14px 0;
+}
+
+.key-idea{
+    margin-top:18px;
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+}
+
+.key-idea strong{
+    color:var(--primary);
+}
+
+/* =========================
+   LAB
+========================= */
+
+.lab{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:24px;
+    align-items:start;
+}
+
+.controls{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.control-card{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+}
+
+.control-card h3{
+    margin:0 0 6px;
+    color:var(--primary);
+}
+
+.control-card p{
+    color:var(--muted);
+    margin:4px 0 10px;
+    font-size:14px;
+}
+
+.slider-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:8px;
+}
+
+.value-pill{
+    background:var(--primary);
+    color:#fff;
+    border-radius:999px;
+    padding:5px 10px;
+    min-width:74px;
+    text-align:center;
+    font-weight:700;
+    font-size:14px;
+}
+
+input[type="range"]{
+    width:100%;
+    accent-color:var(--accent);
+}
+
+/* =========================
+   GRAPH
+========================= */
+
+.graph-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+}
+
+.graph-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:14px;
+}
+
+.graph-header h3{
+    margin:0;
+    color:var(--primary);
+}
+
+.graph-header p{
+    margin:4px 0 0;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.legend{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:var(--muted);
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.legend-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+}
+
+.dot-blue{
+    background:#2f80ed;
+}
+
+.dot-orange{
+    background:#f39c12;
+}
+
+.dot-red{
+    background:#e74c3c;
+}
+
+canvas{
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    background:white;
+    display:block;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+    margin-top:16px;
+    padding:14px 16px;
+    border-radius:12px;
+    font-weight:600;
+    font-size:14px;
+}
+
+.success{
+    background:#e9f7ef;
+    color:#146c43;
+    border:1px solid #b7e4c7;
+}
+
+.fail{
+    background:#fff1f0;
+    color:#a93226;
+    border:1px solid #f3c3be;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:16px;
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:10px 15px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.btn-play{
+    background:var(--success);
+    color:#fff;
+}
+
+.btn-pause{
+    background:var(--warning);
+    color:#fff;
+}
+
+.btn-reset{
+    background:#6c757d;
+    color:#fff;
+}
+
+/* =========================
+   CONCLUSION
+========================= */
+
+.conclusion{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.mini-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+}
+
+.mini-card .number{
+    width:36px;
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--primary-soft);
+    color:var(--primary);
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+.mini-card h3{
+    margin:0 0 6px;
+    color:var(--primary);
+}
+
+.mini-card p{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+}
+
+footer{
+    text-align:center;
+    color:var(--muted);
+    padding:35px 20px 45px;
+    font-size:13px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .grid-2,
+    .lab,
+    .conclusion{
+        grid-template-columns:1fr;
+    }
+
+    .nav{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .graph-header{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:600px){
+
+    .hero-card{
+        padding:30px 22px;
+    }
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .navlinks{
+        gap:12px;
     }
 }
 </style>
@@ -132,278 +502,558 @@ button {
 
 <body>
 
-<header>
-    <h1>Kalkulus Diferensial</h1>
-    <p>Visualisasi Definisi Formal Limit</p>
-</header>
+<div class="topbar">
+    <div class="nav">
 
-<div class="container">
+        <div class="brand">
+            Kalkulus Diferensial
+        </div>
 
-<div class="card">
+        <div class="navlinks">
+            <a href="#konsep">Konsep</a>
+            <a href="#definisi">Definisi Formal</a>
+            <a href="#eksperimen">Eksperimen</a>
+            <a href="#kesimpulan">Kesimpulan</a>
+        </div>
 
-<h2>1. Ide Dasar Limit</h2>
-
-<p>
-Perhatikan fungsi
-</p>
-
-<div class="formula">
-\[
-f(x)=2x+1
-\]
-</div>
-
-<p>
-Kita ingin memahami secara visual mengapa
-</p>
-
-<div class="formula">
-\[
-\boxed{\lim_{x\to3}(2x+1)=7}
-\]
-</div>
-
-<p>
-Ketika \(x\) semakin dekat ke \(3\), nilai \(f(x)\)
-akan semakin dekat ke \(7\).
-</p>
-
+    </div>
 </div>
 
 
-<div class="card">
+<section class="hero">
 
-<h2>2. Definisi Formal</h2>
+    <div class="hero-card">
 
-<div class="formula">
-\[
-\forall \varepsilon>0,\;
-\exists \delta>0
-\]
-</div>
+        <div class="badge">
+            Bab 1 · Limit Fungsi
+        </div>
 
-<p>
-sehingga
-</p>
+        <h1>
+            Memahami Definisi Formal Limit
+        </h1>
 
-<div class="formula">
-\[
-0<|x-3|<\delta
-\quad\Rightarrow\quad
-|f(x)-7|<\varepsilon.
-\]
-</div>
+        <p>
+            Pelajari hubungan antara ε dan δ melalui
+            penjelasan visual, grafik, dan eksperimen interaktif.
+        </p>
 
-<p>
-Gunakan slider di bawah ini untuk melihat arti
-<strong>epsilon</strong> dan <strong>delta</strong>.
-</p>
+    </div>
 
-</div>
+</section>
 
 
-<div class="card">
-
-<h2>3. Eksperimen ε–δ</h2>
-
-<div class="controls">
-
-<div class="control-box">
-
-<h3>Epsilon (\(\varepsilon\))</h3>
-
-<p>
-Mengatur seberapa dekat nilai \(f(x)\) harus berada
-dengan \(L=7\).
-</p>
-
-<input
-type="range"
-id="epsilon"
-min="0.1"
-max="2"
-step="0.1"
-value="1"
->
-
-<p>
-\[
-\varepsilon =
-\]
-<span class="value" id="epsValue">1.0</span>
-</p>
-
-<p>
-Daerah yang diperbolehkan:
-</p>
-
-<div class="formula">
-\[
-7-\varepsilon<f(x)<7+\varepsilon
-\]
-</div>
-
-</div>
+<main class="container">
 
 
-<div class="control-box">
+<section id="konsep">
 
-<h3>Delta (\(\delta\))</h3>
+    <div class="section-title">
+        <span>01 · Konsep Dasar</span>
 
-<p>
-Mengatur seberapa dekat \(x\) harus berada dengan
-\(a=3\).
-</p>
+        <h2>
+            Apa yang dimaksud dengan limit?
+        </h2>
 
-<input
-type="range"
-id="delta"
-min="0.05"
-max="1"
-step="0.05"
-value="0.5"
->
-
-<p>
-\[
-\delta =
-\]
-<span class="value" id="deltaValue">0.50</span>
-</p>
-
-<p>
-Daerah \(x\):
-</p>
-
-<div class="formula">
-\[
-3-\delta<x<3+\delta
-\]
-</div>
-
-</div>
-
-</div>
-
-<br>
-
-<canvas id="graph" width="1000" height="520"></canvas>
-
-<div id="status" class="status"></div>
-
-</div>
+        <p>
+            Kita mulai dari gagasan intuitif sebelum masuk
+            ke definisi formal.
+        </p>
+    </div>
 
 
-<div class="card">
+    <div class="grid-2">
 
-<h2>4. Animasi \(x\to3\)</h2>
+        <div class="card">
 
-<p>
-Tekan tombol <strong>Play</strong>.
-Titik pada grafik akan bergerak menuju \(x=3\).
-Perhatikan bagaimana nilai \(f(x)\) bergerak menuju \(7\).
-</p>
+            <h3>
+                Contoh fungsi
+            </h3>
 
-<button class="play" onclick="playAnimation()">▶ Play</button>
-<button class="pause" onclick="pauseAnimation()">⏸ Pause</button>
-<button class="reset" onclick="resetAnimation()">↺ Reset</button>
+            <div class="formula">
+                \[
+                f(x)=2x+1
+                \]
+            </div>
 
-<p>
-Nilai saat ini:
-</p>
+            <p>
+                Kita ingin memahami mengapa
+            </p>
 
-<div class="formula">
-\[
-x =
-\]
-<span id="xValue">1.00</span>
+            <div class="formula">
+                \[
+                \boxed{
+                \lim_{x\to3}(2x+1)=7
+                }
+                \]
+            </div>
 
-&nbsp;&nbsp;&nbsp;
+            <p>
+                Ketika nilai \(x\) semakin mendekati \(3\),
+                nilai fungsi \(f(x)\) semakin mendekati \(7\).
+            </p>
 
-\[
-f(x)=
-\]
-<span id="fxValue">3.00</span>
-</div>
-
-</div>
+        </div>
 
 
-<div class="card">
+        <div class="card">
 
-<h2>5. Apa yang Harus Diamati?</h2>
+            <div class="definition-box">
 
-<p>
-Cobalah kecilkan nilai \(\varepsilon\).
-Pita horizontal pada grafik akan semakin sempit.
-</p>
+                <strong>Ide utama</strong>
 
-<p>
-Kemudian kecilkan nilai \(\delta\).
-Daerah vertikal di sekitar \(x=3\) juga akan semakin sempit.
-</p>
+                <p>
+                    Limit tidak bertanya apa yang terjadi
+                    tepat pada \(x=3\), tetapi apa yang terjadi
+                    ketika \(x\) berada semakin dekat dengan \(3\).
+                </p>
 
-<p>
-Untuk fungsi
-</p>
+            </div>
 
-<div class="formula">
-\[
-f(x)=2x+1,
-\]
-</div>
+            <div class="key-idea">
 
-<p>
-kita mempunyai
-</p>
+                <strong>Hubungan penting:</strong>
 
-<div class="formula">
-\[
-|f(x)-7|
-=
-|2x+1-7|
-=
-2|x-3|.
-\]
-</div>
+                <div class="formula">
+                    \[
+                    x\to3
+                    \quad\Longrightarrow\quad
+                    f(x)\to7
+                    \]
+                </div>
 
-<p>
-Karena itu kita dapat memilih
-</p>
+            </div>
 
-<div class="formula">
-\[
-\boxed{\delta=\frac{\varepsilon}{2}}.
-\]
-</div>
+        </div>
 
-</div>
+    </div>
 
-</div>
+</section>
+
+
+<section id="definisi">
+
+    <div class="section-title">
+
+        <span>02 · Definisi Formal</span>
+
+        <h2>
+            Dari intuisi menuju ε dan δ
+        </h2>
+
+        <p>
+            Sekarang kita nyatakan konsep “dekat”
+            secara matematis.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="definition-box">
+
+            <div class="formula">
+
+                \[
+                \lim_{x\to a}f(x)=L
+                \]
+
+                jika untuk setiap
+
+                \[
+                \varepsilon>0
+                \]
+
+                terdapat
+
+                \[
+                \delta>0
+                \]
+
+                sehingga
+
+                \[
+                0<|x-a|<\delta
+                \quad\Rightarrow\quad
+                |f(x)-L|<\varepsilon.
+                \]
+
+            </div>
+
+        </div>
+
+        <div class="grid-2" style="margin-top:20px;">
+
+            <div class="key-idea">
+
+                <strong>
+                    ε mengontrol keluaran
+                </strong>
+
+                <p>
+                    \(\varepsilon\) menentukan seberapa dekat
+                    nilai \(f(x)\) harus berada terhadap \(L\).
+                </p>
+
+            </div>
+
+            <div class="key-idea">
+
+                <strong>
+                    δ mengontrol masukan
+                </strong>
+
+                <p>
+                    \(\delta\) menentukan seberapa dekat
+                    nilai \(x\) harus berada terhadap \(a\).
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="eksperimen">
+
+    <div class="section-title">
+
+        <span>03 · Eksperimen Interaktif</span>
+
+        <h2>
+            Eksperimen ε–δ
+        </h2>
+
+        <p>
+            Geser nilai ε dan δ, lalu perhatikan perubahan
+            pada grafik.
+        </p>
+
+    </div>
+
+
+    <div class="lab">
+
+        <div class="controls">
+
+            <div class="control-card">
+
+                <div class="slider-row">
+
+                    <h3>
+                        Epsilon ε
+                    </h3>
+
+                    <div class="value-pill"
+                         id="epsValue">
+                        1.00
+                    </div>
+
+                </div>
+
+                <p>
+                    Toleransi terhadap nilai limit \(L=7\).
+                </p>
+
+                <input
+                    type="range"
+                    id="epsilon"
+                    min="0.1"
+                    max="2"
+                    step="0.05"
+                    value="1"
+                >
+
+                <div class="formula">
+                    \[
+                    7-\varepsilon
+                    <
+                    f(x)
+                    <
+                    7+\varepsilon
+                    \]
+                </div>
+
+            </div>
+
+
+            <div class="control-card">
+
+                <div class="slider-row">
+
+                    <h3>
+                        Delta δ
+                    </h3>
+
+                    <div class="value-pill"
+                         id="deltaValue">
+                        0.50
+                    </div>
+
+                </div>
+
+                <p>
+                    Toleransi terhadap titik \(a=3\).
+                </p>
+
+                <input
+                    type="range"
+                    id="delta"
+                    min="0.05"
+                    max="1"
+                    step="0.05"
+                    value="0.5"
+                >
+
+                <div class="formula">
+                    \[
+                    3-\delta
+                    <
+                    x
+                    <
+                    3+\delta
+                    \]
+                </div>
+
+            </div>
+
+
+            <div class="control-card">
+
+                <h3>
+                    Animasi
+                </h3>
+
+                <p>
+                    Gerakkan titik menuju \(x=3\).
+                </p>
+
+                <div class="buttons">
+
+                    <button
+                        class="btn-play"
+                        onclick="playAnimation()">
+                        ▶ Play
+                    </button>
+
+                    <button
+                        class="btn-pause"
+                        onclick="pauseAnimation()">
+                        ⏸ Pause
+                    </button>
+
+                    <button
+                        class="btn-reset"
+                        onclick="resetAnimation()">
+                        ↺ Reset
+                    </button>
+
+                </div>
+
+                <div class="key-idea"
+                     style="margin-top:16px;">
+
+                    <strong>
+                        Posisi titik
+                    </strong>
+
+                    <p>
+                        \(x =
+                        \)
+                        <span id="xValue">
+                            1.000
+                        </span>
+                    </p>
+
+                    <p>
+                        \(f(x)=
+                        \)
+                        <span id="fxValue">
+                            3.000
+                        </span>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="graph-card">
+
+            <div class="graph-header">
+
+                <div>
+                    <h3>
+                        Grafik \(f(x)=2x+1\)
+                    </h3>
+
+                    <p>
+                        Pita biru = ε,
+                        pita oranye = δ.
+                    </p>
+                </div>
+
+                <div class="legend">
+
+                    <div class="legend-item">
+                        <span class="legend-dot dot-blue"></span>
+                        ε
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot dot-orange"></span>
+                        δ
+                    </div>
+
+                    <div class="legend-item">
+                        <span class="legend-dot dot-red"></span>
+                        Titik
+                    </div>
+
+                </div>
+
+            </div>
+
+            <canvas
+                id="graph"
+                width="900"
+                height="560">
+            </canvas>
+
+            <div
+                id="status"
+                class="status">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="kesimpulan">
+
+    <div class="section-title">
+
+        <span>04 · Kesimpulan</span>
+
+        <h2>
+            Apa yang harus dipahami?
+        </h2>
+
+    </div>
+
+
+    <div class="conclusion">
+
+        <div class="mini-card">
+
+            <div class="number">
+                1
+            </div>
+
+            <h3>
+                ε menentukan target
+            </h3>
+
+            <p>
+                Semakin kecil ε, semakin dekat
+                \(f(x)\) harus berada terhadap \(L\).
+            </p>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <div class="number">
+                2
+            </div>
+
+            <h3>
+                δ mengontrol x
+            </h3>
+
+            <p>
+                Kita memilih δ agar nilai \(x\)
+                cukup dekat terhadap \(a\).
+            </p>
+
+        </div>
+
+
+        <div class="mini-card">
+
+            <div class="number">
+                3
+            </div>
+
+            <h3>
+                Hubungan ε dan δ
+            </h3>
+
+            <p>
+                Untuk fungsi ini,
+                pilihan yang sederhana adalah
+                \(\delta=\frac{\varepsilon}{2}\).
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+    Media Pembelajaran · Kalkulus Diferensial
+</footer>
 
 
 <script>
 
-const canvas = document.getElementById("graph");
-const ctx = canvas.getContext("2d");
+const canvas =
+    document.getElementById("graph");
 
-const epsilonSlider = document.getElementById("epsilon");
-const deltaSlider = document.getElementById("delta");
+const ctx =
+    canvas.getContext("2d");
 
-const epsValue = document.getElementById("epsValue");
-const deltaValue = document.getElementById("deltaValue");
+const epsilonSlider =
+    document.getElementById("epsilon");
 
-const statusBox = document.getElementById("status");
+const deltaSlider =
+    document.getElementById("delta");
 
-const xDisplay = document.getElementById("xValue");
-const fxDisplay = document.getElementById("fxValue");
+const epsValue =
+    document.getElementById("epsValue");
+
+const deltaValue =
+    document.getElementById("deltaValue");
+
+const statusBox =
+    document.getElementById("status");
+
+const xDisplay =
+    document.getElementById("xValue");
+
+const fxDisplay =
+    document.getElementById("fxValue");
+
 
 let animatedX = 1;
-let animationID = null;
 let running = false;
+let animationID = null;
 
 
-// batas grafik
 const xmin = 0;
 const xmax = 6;
 
@@ -411,36 +1061,74 @@ const ymin = 0;
 const ymax = 14;
 
 
-function X(x) {
-    return (x - xmin) / (xmax - xmin) * canvas.width;
+function X(x){
+
+    return (
+        (x-xmin)/(xmax-xmin)
+    ) * canvas.width;
 }
 
-function Y(y) {
+
+function Y(y){
+
     return canvas.height -
-           (y - ymin) / (ymax - ymin) * canvas.height;
+        (
+            (y-ymin)/(ymax-ymin)
+        ) * canvas.height;
 }
 
 
-function drawGraph() {
+function drawGraph(){
 
-    const eps = parseFloat(epsilonSlider.value);
-    const delta = parseFloat(deltaSlider.value);
+    const eps =
+        parseFloat(
+            epsilonSlider.value
+        );
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const delta =
+        parseFloat(
+            deltaSlider.value
+        );
 
 
-    // pita epsilon
-    ctx.fillStyle = "rgba(70,130,180,0.20)";
-    ctx.fillRect(
+    ctx.clearRect(
         0,
-        Y(7 + eps),
+        0,
         canvas.width,
-        Y(7 - eps)-Y(7 + eps)
+        canvas.height
     );
 
 
-    // pita delta
-    ctx.fillStyle = "rgba(255,165,0,0.18)";
+    /* background */
+
+    ctx.fillStyle="#ffffff";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /* epsilon band */
+
+    ctx.fillStyle=
+        "rgba(47,128,237,.13)";
+
+    ctx.fillRect(
+        0,
+        Y(7+eps),
+        canvas.width,
+        Y(7-eps)-Y(7+eps)
+    );
+
+
+    /* delta band */
+
+    ctx.fillStyle=
+        "rgba(243,156,18,.14)";
+
     ctx.fillRect(
         X(3-delta),
         0,
@@ -449,129 +1137,253 @@ function drawGraph() {
     );
 
 
-    // grid
-    ctx.strokeStyle = "#eeeeee";
-    ctx.lineWidth = 1;
+    /* grid */
 
-    for(let x=0; x<=6; x++){
+    ctx.strokeStyle="#edf1f5";
+    ctx.lineWidth=1;
+
+    for(let x=0;x<=6;x++){
 
         ctx.beginPath();
-        ctx.moveTo(X(x),0);
-        ctx.lineTo(X(x),canvas.height);
+
+        ctx.moveTo(
+            X(x),
+            0
+        );
+
+        ctx.lineTo(
+            X(x),
+            canvas.height
+        );
+
         ctx.stroke();
     }
 
-    for(let y=0; y<=14; y+=2){
+
+    for(let y=0;y<=14;y+=2){
 
         ctx.beginPath();
-        ctx.moveTo(0,Y(y));
-        ctx.lineTo(canvas.width,Y(y));
+
+        ctx.moveTo(
+            0,
+            Y(y)
+        );
+
+        ctx.lineTo(
+            canvas.width,
+            Y(y)
+        );
+
         ctx.stroke();
     }
 
 
-    // sumbu
-    ctx.strokeStyle = "#333";
-    ctx.lineWidth = 2;
+    /* axes */
+
+    ctx.strokeStyle="#3f4752";
+    ctx.lineWidth=2;
 
     ctx.beginPath();
-    ctx.moveTo(X(0),Y(0));
-    ctx.lineTo(X(6),Y(0));
+
+    ctx.moveTo(
+        X(0),
+        Y(0)
+    );
+
+    ctx.lineTo(
+        X(6),
+        Y(0)
+    );
+
     ctx.stroke();
 
+
     ctx.beginPath();
-    ctx.moveTo(X(0),Y(0));
-    ctx.lineTo(X(0),Y(14));
+
+    ctx.moveTo(
+        X(0),
+        Y(0)
+    );
+
+    ctx.lineTo(
+        X(0),
+        Y(14)
+    );
+
     ctx.stroke();
 
 
-    // label
-    ctx.fillStyle = "#333";
-    ctx.font = "16px Arial";
+    /* axis labels */
 
-    for(let x=0; x<=6; x++){
-        ctx.fillText(x,X(x)-5,Y(0)-8);
+    ctx.fillStyle="#6b7280";
+    ctx.font="15px Arial";
+
+
+    for(let x=0;x<=6;x++){
+
+        ctx.fillText(
+            x,
+            X(x)-4,
+            Y(0)-9
+        );
     }
 
-    for(let y=2; y<=14; y+=2){
-        ctx.fillText(y,X(0)+8,Y(y)+5);
+
+    for(let y=2;y<=14;y+=2){
+
+        ctx.fillText(
+            y,
+            8,
+            Y(y)+5
+        );
     }
 
 
-    // fungsi y = 2x + 1
-    ctx.strokeStyle = "#234d6f";
-    ctx.lineWidth = 4;
+    /* function */
+
+    ctx.strokeStyle="#1f4e79";
+    ctx.lineWidth=4;
 
     ctx.beginPath();
 
-    for(let x=0; x<=6; x+=0.01){
 
-        const y=2*x+1;
+    for(
+        let x=0;
+        x<=6;
+        x+=0.01
+    ){
+
+        const y =
+            2*x+1;
+
 
         if(x===0){
-            ctx.moveTo(X(x),Y(y));
+
+            ctx.moveTo(
+                X(x),
+                Y(y)
+            );
+
         }else{
-            ctx.lineTo(X(x),Y(y));
+
+            ctx.lineTo(
+                X(x),
+                Y(y)
+            );
         }
     }
 
+
     ctx.stroke();
 
 
-    // garis a = 3
-    ctx.strokeStyle = "#cc6600";
-    ctx.setLineDash([8,6]);
-    ctx.lineWidth = 2;
+    /* a = 3 */
+
+    ctx.strokeStyle="#f39c12";
+    ctx.lineWidth=2;
+
+    ctx.setLineDash([7,7]);
 
     ctx.beginPath();
-    ctx.moveTo(X(3),0);
-    ctx.lineTo(X(3),canvas.height);
+
+    ctx.moveTo(
+        X(3),
+        0
+    );
+
+    ctx.lineTo(
+        X(3),
+        canvas.height
+    );
+
     ctx.stroke();
 
 
-    // garis L = 7
-    ctx.strokeStyle = "#1a73a8";
+    /* L = 7 */
+
+    ctx.strokeStyle="#2f80ed";
 
     ctx.beginPath();
-    ctx.moveTo(0,Y(7));
-    ctx.lineTo(canvas.width,Y(7));
+
+    ctx.moveTo(
+        0,
+        Y(7)
+    );
+
+    ctx.lineTo(
+        canvas.width,
+        Y(7)
+    );
+
     ctx.stroke();
+
 
     ctx.setLineDash([]);
 
 
-    // titik limit
-    ctx.fillStyle = "#111";
+    /* limit point */
+
+    ctx.fillStyle="#1f2937";
 
     ctx.beginPath();
-    ctx.arc(X(3),Y(7),7,0,2*Math.PI);
-    ctx.fill();
 
-
-    // titik animasi
-    const fy = 2*animatedX+1;
-
-    ctx.fillStyle = "#c62828";
-
-    ctx.beginPath();
     ctx.arc(
-        X(animatedX),
-        Y(fy),
-        9,
+        X(3),
+        Y(7),
+        6,
         0,
-        2*Math.PI
+        Math.PI*2
     );
 
     ctx.fill();
 
 
-    // label
-    ctx.fillStyle="#222";
-    ctx.font="18px Arial";
+    /* animated point */
 
-    ctx.fillText("a = 3",X(3)+8,canvas.height-20);
-    ctx.fillText("L = 7",10,Y(7)-10);
-    ctx.fillText("f(x) = 2x + 1",X(4),Y(10)+30);
+    const fy =
+        2*animatedX+1;
+
+
+    ctx.fillStyle="#e74c3c";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        X(animatedX),
+        Y(fy),
+        9,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* labels */
+
+    ctx.fillStyle="#374151";
+    ctx.font="16px Arial";
+
+
+    ctx.fillText(
+        "a = 3",
+        X(3)+9,
+        canvas.height-18
+    );
+
+
+    ctx.fillText(
+        "L = 7",
+        12,
+        Y(7)-10
+    );
+
+
+    ctx.fillText(
+        "f(x) = 2x + 1",
+        X(4),
+        Y(10)+26
+    );
 
 
     updateStatus();
@@ -580,52 +1392,94 @@ function drawGraph() {
 
 function updateStatus(){
 
-    const eps = parseFloat(epsilonSlider.value);
-    const delta = parseFloat(deltaSlider.value);
+    const eps =
+        parseFloat(
+            epsilonSlider.value
+        );
 
-    epsValue.textContent = eps.toFixed(1);
-    deltaValue.textContent = delta.toFixed(2);
+    const delta =
+        parseFloat(
+            deltaSlider.value
+        );
 
-    // karena |f(x)-7| = 2|x-3|
-    const valid = 2*delta <= eps;
+
+    epsValue.textContent =
+        eps.toFixed(2);
+
+    deltaValue.textContent =
+        delta.toFixed(2);
+
+
+    const valid =
+        2*delta <= eps;
+
 
     if(valid){
 
-        statusBox.className="status success";
+        statusBox.className =
+            "status success";
 
         statusBox.innerHTML =
-        "✓ Delta ini cukup kecil. Jika |x−3| < δ, maka |f(x)−7| < ε.";
+        "✓ Pilihan δ sudah cukup kecil. Seluruh nilai fungsi dalam daerah δ memenuhi batas ε.";
 
     }else{
 
-        statusBox.className="status fail";
+        statusBox.className =
+            "status fail";
 
         statusBox.innerHTML =
-        "✗ Delta masih terlalu besar. Coba kecilkan δ agar seluruh bagian grafik memenuhi batas ε.";
+        "✗ δ masih terlalu besar. Kecilkan δ sampai seluruh bagian grafik masuk ke dalam pita ε.";
     }
 }
 
 
-epsilonSlider.addEventListener("input",drawGraph);
-deltaSlider.addEventListener("input",drawGraph);
+epsilonSlider.addEventListener(
+    "input",
+    drawGraph
+);
+
+
+deltaSlider.addEventListener(
+    "input",
+    drawGraph
+);
 
 
 function animationStep(){
 
-    if(!running) return;
+    if(!running){
+        return;
+    }
 
-    animatedX += (3-animatedX)*0.025;
 
-    const fx=2*animatedX+1;
+    animatedX +=
+        (3-animatedX)*0.025;
 
-    xDisplay.textContent=animatedX.toFixed(4);
-    fxDisplay.textContent=fx.toFixed(4);
+
+    const fx =
+        2*animatedX+1;
+
+
+    xDisplay.textContent =
+        animatedX.toFixed(3);
+
+    fxDisplay.textContent =
+        fx.toFixed(3);
+
 
     drawGraph();
 
-    if(Math.abs(animatedX-3)>0.0005){
 
-        animationID=requestAnimationFrame(animationStep);
+    if(
+        Math.abs(
+            animatedX-3
+        ) > 0.0005
+    ){
+
+        animationID =
+            requestAnimationFrame(
+                animationStep
+            );
 
     }else{
 
@@ -636,7 +1490,10 @@ function animationStep(){
 
 function playAnimation(){
 
-    if(running) return;
+    if(running){
+        return;
+    }
+
 
     running=true;
 
@@ -648,7 +1505,9 @@ function pauseAnimation(){
 
     running=false;
 
-    cancelAnimationFrame(animationID);
+    cancelAnimationFrame(
+        animationID
+    );
 }
 
 
@@ -656,12 +1515,20 @@ function resetAnimation(){
 
     running=false;
 
-    cancelAnimationFrame(animationID);
+    cancelAnimationFrame(
+        animationID
+    );
+
 
     animatedX=1;
 
-    xDisplay.textContent="1.0000";
-    fxDisplay.textContent="3.0000";
+
+    xDisplay.textContent=
+        "1.000";
+
+    fxDisplay.textContent=
+        "3.000";
+
 
     drawGraph();
 }

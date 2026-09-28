@@ -1290,14 +1290,17 @@ footer{
 
             <div class="formula" style="font-size:17px;">
                 \[
-                f(x)=\frac1x
+                f(x)=
+                \begin{cases}
+                -\dfrac{1}{x}, & x&lt;0,\\[4pt]
+                1, & x\ge 0.
+                \end{cases}
                 \]
             </div>
 
             <p>
-                Ketika \(x\to0\),
-                dari kiri fungsi menuju \(-\infty\),
-                sedangkan dari kanan menuju \(+\infty\).
+                Ketika \(x\to0^-\), nilai fungsi menuju \(+\infty\).
+                Namun ketika \(x\to0^+\), nilai fungsi mendekati \(1\).
             </p>
 
         </div>
@@ -2631,7 +2634,10 @@ function drawPatternJump(){
 
 
 /* =========================================================
-   GRAPH 1/x
+   GRAPH FUNGSI TAK TERBATAS
+   contoh:
+   f(x) = -1/x,   x < 0
+   f(x) = 1,      x >= 0
 ========================================================= */
 
 const infiniteCanvas =
@@ -2657,8 +2663,8 @@ function infiniteMapX(x){
 
 function infiniteMapY(y){
 
-    const ymin=-6;
-    const ymax=6;
+    const ymin=-1;
+    const ymax=8;
 
     return infiniteCanvas.height-35 -
         (y-ymin)/(ymax-ymin) *
@@ -2688,6 +2694,7 @@ function drawInfinite(){
     );
 
 
+    /* grid vertikal */
     for(
         let x=-2;
         x<=2;
@@ -2706,10 +2713,11 @@ function drawInfinite(){
     }
 
 
+    /* grid horizontal */
     for(
-        let y=-6;
-        y<=6;
-        y+=2
+        let y=-1;
+        y<=8;
+        y+=1
     ){
 
         drawLine(
@@ -2724,6 +2732,7 @@ function drawInfinite(){
     }
 
 
+    /* sumbu-x */
     drawLine(
         ctx,
         45,
@@ -2734,7 +2743,7 @@ function drawInfinite(){
         2
     );
 
-
+    /* sumbu-y */
     drawLine(
         ctx,
         infiniteMapX(0),
@@ -2746,14 +2755,12 @@ function drawInfinite(){
     );
 
 
+    /* cabang kiri: y = -1/x untuk x < 0 */
     ctx.strokeStyle="#1f4e79";
     ctx.lineWidth=3;
-
-
     ctx.beginPath();
 
     let started=false;
-
 
     for(
         let x=-2;
@@ -2761,91 +2768,55 @@ function drawInfinite(){
         x+=0.005
     ){
 
-        const y=1/x;
+        const y = -1/x;
 
         if(
-            y<-6 ||
-            y>6
+            y < -1 ||
+            y > 8
         ){
-
             started=false;
             continue;
-
         }
 
-
-        const px =
-            infiniteMapX(x);
-
-        const py =
-            infiniteMapY(y);
-
+        const px = infiniteMapX(x);
+        const py = infiniteMapY(y);
 
         if(!started){
-
             ctx.moveTo(px,py);
             started=true;
-
         }else{
-
             ctx.lineTo(px,py);
-
         }
-
     }
-
 
     ctx.stroke();
 
 
-    ctx.beginPath();
-
-    started=false;
-
-
-    for(
-        let x=0.02;
-        x<=2;
-        x+=0.005
-    ){
-
-        const y=1/x;
-
-        if(
-            y<-6 ||
-            y>6
-        ){
-
-            started=false;
-            continue;
-
-        }
+    /* cabang kanan: y = 1 untuk x >= 0 */
+    drawLine(
+        ctx,
+        infiniteMapX(0),
+        infiniteMapY(1),
+        infiniteMapX(2),
+        infiniteMapY(1),
+        "#2f80ed",
+        3
+    );
 
 
-        const px =
-            infiniteMapX(x);
-
-        const py =
-            infiniteMapY(y);
-
-
-        if(!started){
-
-            ctx.moveTo(px,py);
-            started=true;
-
-        }else{
-
-            ctx.lineTo(px,py);
-
-        }
-
-    }
+    /* titik di (0,1) */
+    drawCircle(
+        ctx,
+        infiniteMapX(0),
+        infiniteMapY(1),
+        5,
+        "#2f80ed",
+        "#2f80ed",
+        1
+    );
 
 
-    ctx.stroke();
-
-
+    /* garis bantu x = 0 */
     drawLine(
         ctx,
         infiniteMapX(0),
@@ -2855,6 +2826,32 @@ function drawInfinite(){
         "#c0392b",
         1.5,
         [6,6]
+    );
+
+
+    /* label sumbu x */
+    ctx.fillStyle="#6b7280";
+    ctx.font="13px Arial";
+
+    [-2,-1,0,1,2].forEach(
+        x=>{
+            ctx.fillText(
+                x,
+                infiniteMapX(x)-7,
+                infiniteMapY(0)+18
+            );
+        }
+    );
+
+    /* label sumbu y */
+    [1,2,4,6,8].forEach(
+        y=>{
+            ctx.fillText(
+                y,
+                infiniteMapX(0)+8,
+                infiniteMapY(y)+4
+            );
+        }
     );
 
 }

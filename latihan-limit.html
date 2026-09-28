@@ -1,1 +1,1011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Latihan Limit | Kalkulus Diferensial</title>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+:root{
+    --bg:#f4f7fb;
+    --surface:#ffffff;
+    --primary:#1f4e79;
+    --primary-dark:#163b5f;
+    --accent:#2f80ed;
+    --success:#198754;
+    --danger:#c0392b;
+    --warning:#d68910;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --border:#dfe6ee;
+    --shadow:0 10px 28px rgba(31,78,121,.08);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:
+        Inter, ui-sans-serif, system-ui,
+        -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+}
+
+.topbar{
+    background:white;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.nav{
+    max-width:1100px;
+    margin:auto;
+    padding:14px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.brand a{
+    color:var(--primary);
+    font-weight:800;
+    text-decoration:none;
+}
+
+.nav-right{
+    display:flex;
+    gap:18px;
+}
+
+.nav-right a{
+    text-decoration:none;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.hero{
+    max-width:1100px;
+    margin:35px auto 0;
+    padding:0 24px;
+}
+
+.hero-box{
+    background:
+        linear-gradient(
+            135deg,
+            #163b5f 0%,
+            #1f4e79 55%,
+            #2f80ed 100%
+        );
+    border-radius:24px;
+    padding:40px;
+    color:white;
+    box-shadow:var(--shadow);
+}
+
+.badge{
+    display:inline-block;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.25);
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    margin-bottom:12px;
+}
+
+.hero h1{
+    margin:0 0 8px;
+    font-size:38px;
+}
+
+.hero p{
+    margin:0;
+    color:rgba(255,255,255,.86);
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:35px 24px 70px;
+}
+
+.section-title{
+    margin:35px 0 18px;
+}
+
+.section-title span{
+    color:var(--accent);
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.section-title h2{
+    margin:5px 0;
+    color:var(--primary);
+}
+
+.section-title p{
+    margin:0;
+    color:var(--muted);
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:26px;
+    box-shadow:var(--shadow);
+}
+
+.formula{
+    text-align:center;
+    font-size:21px;
+    margin:18px 0;
+}
+
+.challenge-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.info-box{
+    background:#eef5fb;
+    border-left:5px solid var(--primary);
+    padding:18px;
+    border-radius:12px;
+}
+
+.slider-box{
+    background:#f8fafc;
+    border:1px solid var(--border);
+    padding:20px;
+    border-radius:14px;
+}
+
+.slider-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.value{
+    background:var(--primary);
+    color:white;
+    padding:5px 12px;
+    border-radius:999px;
+    font-weight:800;
+}
+
+input[type="range"]{
+    width:100%;
+    accent-color:var(--accent);
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:11px 16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-secondary{
+    background:#e9eef3;
+    color:var(--text);
+}
+
+.feedback{
+    margin-top:18px;
+    padding:16px;
+    border-radius:12px;
+    display:none;
+}
+
+.correct{
+    display:block;
+    background:#e9f7ef;
+    color:#146c43;
+    border:1px solid #b7e4c7;
+}
+
+.wrong{
+    display:block;
+    background:#fff1f0;
+    color:#a93226;
+    border:1px solid #f3c3be;
+}
+
+.question{
+    background:#fafbfc;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:18px;
+}
+
+.question h3{
+    margin-top:0;
+    color:var(--primary);
+}
+
+.option{
+    display:block;
+    margin:9px 0;
+    padding:11px 14px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    cursor:pointer;
+    background:white;
+}
+
+.option:hover{
+    background:#f3f7fb;
+}
+
+.option input{
+    margin-right:9px;
+}
+
+.score-box{
+    background:var(--primary);
+    color:white;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    margin-top:24px;
+}
+
+.score-number{
+    font-size:40px;
+    font-weight:900;
+}
+
+.button-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:18px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+@media(max-width:750px){
+    .challenge-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .nav{
+        align-items:flex-start;
+        gap:10px;
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="topbar">
+    <div class="nav">
+
+        <div class="brand">
+            <a href="index.html">
+                ← Kalkulus Diferensial
+            </a>
+        </div>
+
+        <div class="nav-right">
+            <a href="limit.html">Materi Limit</a>
+            <a href="#kuis">Kuis</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<section class="hero">
+    <div class="hero-box">
+
+        <div class="badge">
+            Latihan Interaktif
+        </div>
+
+        <h1>Latihan Konsep Limit</h1>
+
+        <p>
+            Uji pemahaman tentang epsilon, delta,
+            dan definisi formal limit.
+        </p>
+
+    </div>
+</section>
+
+
+<main class="container">
+
+<section>
+
+    <div class="section-title">
+        <span>01 · Tantangan</span>
+
+        <h2>
+            Tentukan nilai \(\delta\)
+        </h2>
+
+        <p>
+            Gunakan hubungan antara ε dan δ,
+            kemudian uji jawaban Anda.
+        </p>
+    </div>
+
+
+    <div class="card">
+
+        <div class="challenge-grid">
+
+            <div>
+
+                <div class="info-box">
+
+                    Diketahui
+
+                    <div class="formula">
+                        \[
+                        f(x)=2x+1
+                        \]
+                    </div>
+
+                    dan
+
+                    <div class="formula">
+                        \[
+                        \lim_{x\to3}f(x)=7.
+                        \]
+                    </div>
+
+                    Komputer memberikan nilai
+
+                    <div class="formula">
+                        \[
+                        \varepsilon =
+                        \boxed{
+                        \class{eps}{}
+                        }
+                        \]
+                    </div>
+
+                    <div style="
+                        text-align:center;
+                        font-size:30px;
+                        font-weight:800;
+                        color:#1f4e79;
+                    "
+                    id="epsilonDisplay">
+                        1.00
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="slider-box">
+
+                <div class="slider-head">
+
+                    <h3>
+                        Pilih \(\delta\)
+                    </h3>
+
+                    <span
+                        class="value"
+                        id="deltaDisplay">
+                        0.50
+                    </span>
+
+                </div>
+
+                <input
+                    type="range"
+                    id="deltaSlider"
+                    min="0.05"
+                    max="1.5"
+                    step="0.05"
+                    value="0.50"
+                >
+
+                <p>
+                    Anda harus memilih \(\delta\)
+                    sehingga
+                </p>
+
+                <div class="formula">
+                    \[
+                    0<|x-3|<\delta
+                    \]
+                </div>
+
+                menjamin
+
+                <div class="formula">
+                    \[
+                    |f(x)-7|<\varepsilon.
+                    \]
+                </div>
+
+                <div class="button-row">
+
+                    <button
+                        class="btn-primary"
+                        onclick="checkDelta()">
+                        Periksa Jawaban
+                    </button>
+
+                    <button
+                        class="btn-secondary"
+                        onclick="newChallenge()">
+                        Soal Baru
+                    </button>
+
+                </div>
+
+                <div
+                    id="deltaFeedback"
+                    class="feedback">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section>
+
+    <div class="section-title">
+
+        <span>02 · Penjelasan</span>
+
+        <h2>
+            Mengapa demikian?
+        </h2>
+
+    </div>
+
+    <div class="card">
+
+        Kita mempunyai
+
+        <div class="formula">
+            \[
+            |f(x)-7|
+            =
+            |2x+1-7|
+            \]
+        </div>
+
+        sehingga
+
+        <div class="formula">
+            \[
+            |f(x)-7|
+            =
+            2|x-3|.
+            \]
+        </div>
+
+        Agar
+
+        <div class="formula">
+            \[
+            |f(x)-7|<\varepsilon,
+            \]
+        </div>
+
+        cukup kita pastikan
+
+        <div class="formula">
+            \[
+            2|x-3|<\varepsilon.
+            \]
+        </div>
+
+        Jadi pilihan yang alami adalah
+
+        <div class="formula">
+            \[
+            \boxed{
+            \delta=\frac{\varepsilon}{2}
+            }.
+            \]
+        </div>
+
+        <p>
+            Nilai \(\delta\) yang lebih kecil dari
+            \(\varepsilon/2\) juga tetap memenuhi syarat.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<section id="kuis">
+
+    <div class="section-title">
+
+        <span>03 · Kuis Konsep</span>
+
+        <h2>
+            Apakah konsepnya sudah dipahami?
+        </h2>
+
+        <p>
+            Pilih jawaban yang menurut Anda benar.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <div class="question">
+
+            <h3>
+                1. Apa makna \(\varepsilon\)?
+            </h3>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q1"
+                    value="a">
+                Jarak \(x\) terhadap \(a\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q1"
+                    value="b">
+                Jarak \(f(x)\) terhadap \(L\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q1"
+                    value="c">
+                Nilai fungsi di \(x=a\)
+            </label>
+
+        </div>
+
+
+
+        <div class="question">
+
+            <h3>
+                2. Apa makna \(\delta\)?
+            </h3>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q2"
+                    value="a">
+                Mengontrol seberapa dekat
+                \(x\) terhadap \(a\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q2"
+                    value="b">
+                Menentukan nilai \(L\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q2"
+                    value="c">
+                Menentukan nilai \(f(a)\)
+            </label>
+
+        </div>
+
+
+
+        <div class="question">
+
+            <h3>
+                3. Mengapa pada definisi limit terdapat
+                \(0<|x-a|\)?
+            </h3>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q3"
+                    value="a">
+                Karena \(x\) harus positif
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q3"
+                    value="b">
+                Karena \(x\neq a\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q3"
+                    value="c">
+                Karena \(a\) harus nol
+            </label>
+
+        </div>
+
+
+
+        <div class="question">
+
+            <h3>
+                4. Pernyataan mana yang paling tepat?
+            </h3>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q4"
+                    value="a">
+                Kita memilih ε setelah melihat δ
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q4"
+                    value="b">
+                Untuk setiap ε, kita harus
+                dapat menemukan δ yang sesuai
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q4"
+                    value="c">
+                ε dan δ harus selalu sama
+            </label>
+
+        </div>
+
+
+
+        <div class="question">
+
+            <h3>
+                5. Untuk
+                \(f(x)=2x+1\),
+                jika
+                \(\varepsilon=0.4\),
+                pilihan δ yang sederhana adalah...
+            </h3>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q5"
+                    value="a">
+                \(0.8\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q5"
+                    value="b">
+                \(0.4\)
+            </label>
+
+            <label class="option">
+                <input
+                    type="radio"
+                    name="q5"
+                    value="c">
+                \(0.2\)
+            </label>
+
+        </div>
+
+
+        <button
+            class="btn-primary"
+            onclick="checkQuiz()">
+            Lihat Nilai
+        </button>
+
+
+        <div
+            id="scoreBox"
+            class="score-box"
+            style="display:none;">
+
+            <div>
+                Skor Anda
+            </div>
+
+            <div
+                class="score-number"
+                id="scoreNumber">
+                0/5
+            </div>
+
+            <div
+                id="scoreMessage">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+    Media Pembelajaran · Kalkulus Diferensial
+</footer>
+
+
+<script>
+
+const deltaSlider =
+    document.getElementById("deltaSlider");
+
+const deltaDisplay =
+    document.getElementById("deltaDisplay");
+
+const epsilonDisplay =
+    document.getElementById("epsilonDisplay");
+
+const deltaFeedback =
+    document.getElementById("deltaFeedback");
+
+
+let epsilon = 1.00;
+
+
+deltaSlider.addEventListener(
+    "input",
+    function(){
+
+        deltaDisplay.textContent =
+            parseFloat(
+                deltaSlider.value
+            ).toFixed(2);
+
+    }
+);
+
+
+function checkDelta(){
+
+    const delta =
+        parseFloat(
+            deltaSlider.value
+        );
+
+    const maxDelta =
+        epsilon / 2;
+
+
+    if(delta <= maxDelta){
+
+        deltaFeedback.className =
+            "feedback correct";
+
+        deltaFeedback.innerHTML =
+            "✓ Benar. Karena δ = " +
+            delta.toFixed(2) +
+            " ≤ ε/2 = " +
+            maxDelta.toFixed(2) +
+            ", maka syarat limit terpenuhi.";
+
+    }else{
+
+        deltaFeedback.className =
+            "feedback wrong";
+
+        deltaFeedback.innerHTML =
+            "Belum tepat. Nilai δ terlalu besar. " +
+            "Coba perhatikan kembali bahwa " +
+            "δ harus tidak lebih besar dari ε/2.";
+
+    }
+
+}
+
+
+function newChallenge(){
+
+    const values =
+        [
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0,
+            1.2,
+            1.4,
+            1.6,
+            1.8
+        ];
+
+
+    epsilon =
+        values[
+            Math.floor(
+                Math.random() *
+                values.length
+            )
+        ];
+
+
+    epsilonDisplay.textContent =
+        epsilon.toFixed(2);
+
+
+    deltaSlider.value =
+        0.50;
+
+
+    deltaDisplay.textContent =
+        "0.50";
+
+
+    deltaFeedback.className =
+        "feedback";
+
+
+    deltaFeedback.innerHTML =
+        "";
+
+}
+
+
+function checkQuiz(){
+
+    const answers = {
+        q1:"b",
+        q2:"a",
+        q3:"b",
+        q4:"b",
+        q5:"c"
+    };
+
+
+    let score = 0;
+
+
+    for(
+        const question
+        in answers
+    ){
+
+        const selected =
+            document.querySelector(
+                'input[name="' +
+                question +
+                '"]:checked'
+            );
+
+
+        if(
+            selected &&
+            selected.value ===
+            answers[question]
+        ){
+
+            score++;
+        }
+
+    }
+
+
+    const scoreBox =
+        document.getElementById(
+            "scoreBox"
+        );
+
+    const scoreNumber =
+        document.getElementById(
+            "scoreNumber"
+        );
+
+    const scoreMessage =
+        document.getElementById(
+            "scoreMessage"
+        );
+
+
+    scoreBox.style.display =
+        "block";
+
+
+    scoreNumber.textContent =
+        score + "/5";
+
+
+    if(score === 5){
+
+        scoreMessage.textContent =
+            "Sangat baik. Konsep ε–δ sudah dipahami.";
+
+    }else if(score >= 3){
+
+        scoreMessage.textContent =
+            "Pemahaman sudah cukup baik. Periksa kembali bagian yang masih keliru.";
+
+    }else{
+
+        scoreMessage.textContent =
+            "Coba kembali ke materi Limit dan ulangi eksperimen ε–δ.";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

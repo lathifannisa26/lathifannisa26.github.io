@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turunan | Kalkulus Diferensial</title>
+
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+
+:root{--bg:#f4f7fb;--surface:#fff;--primary:#1f4e79;--primary-soft:#eaf2f8;--accent:#2f80ed;--success:#198754;--success-soft:#edf8f2;--danger:#c0392b;--danger-soft:#fff1f0;--warning:#d68910;--warning-soft:#fff8e8;--purple:#7656a8;--purple-soft:#f3effa;--text:#1f2937;--muted:#6b7280;--border:#dfe6ee;--shadow:0 10px 28px rgba(31,78,121,.08)}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.72} a{color:inherit}
+.topbar{background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:30;backdrop-filter:blur(10px)}
+.nav{max-width:1180px;margin:auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand a{color:var(--primary);text-decoration:none;font-weight:850;white-space:nowrap}.navlinks{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.navlinks a{color:var(--muted);text-decoration:none;font-size:13px}.navlinks a:hover{color:var(--primary)}
+.hero{max-width:1180px;margin:34px auto 0;padding:0 24px}.hero-card{background:linear-gradient(135deg,#163b5f 0%,#1f4e79 55%,#2f80ed 100%);color:#fff;border-radius:26px;padding:46px;box-shadow:var(--shadow)}.badge{display:inline-flex;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.23);font-size:13px;margin-bottom:14px}.hero h1{margin:0 0 10px;font-size:43px;line-height:1.12}.hero p{max-width:840px;margin:0;font-size:17px;color:rgba(255,255,255,.88)}.hero-path{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}.hero-step{padding:7px 11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:9px;font-size:13px}
+.container{max-width:1180px;margin:auto;padding:0 24px 68px}.section{scroll-margin-top:92px}.section-title{margin:46px 0 18px}.section-label{color:var(--accent);font-size:12px;font-weight:850;text-transform:uppercase;letter-spacing:.10em}.section-title h2{margin:4px 0 5px;color:var(--primary);font-size:30px;line-height:1.25}.section-title p{margin:0;color:var(--muted);max-width:920px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px;box-shadow:var(--shadow)}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.formula{text-align:center;font-size:21px;margin:16px 0}.callout{border-left:5px solid var(--primary);background:var(--primary-soft);padding:18px 20px;border-radius:12px}.callout strong{color:var(--primary)}.callout.warning{border-left-color:var(--warning);background:var(--warning-soft)}.callout.success{border-left-color:var(--success);background:var(--success-soft)}.callout.purple{border-left-color:var(--purple);background:var(--purple-soft)}.divider{height:1px;background:var(--border);margin:22px 0}
+.interactive-grid{display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}.control-panel{display:flex;flex-direction:column;gap:16px}.control{background:#f8fafc;border:1px solid var(--border);border-radius:15px;padding:18px}.control h3{margin:0 0 6px;color:var(--primary)}.control p{color:var(--muted);margin:4px 0 10px;font-size:14px}.value-pill{display:inline-block;background:var(--primary);color:#fff;border-radius:999px;padding:5px 10px;min-width:74px;text-align:center;font-weight:700;font-size:14px}input[type="range"]{width:100%;accent-color:var(--accent)}.graph-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px}.graph-heading h3{margin:0;color:var(--primary)}.graph-heading p{margin:4px 0 14px;color:var(--muted);font-size:14px}canvas{width:100%;height:auto;border-radius:14px;background:#fff;display:block}.observation{margin-top:16px;padding:14px 16px;background:#f8fafc;border:1px solid var(--border);border-radius:12px;font-size:14px}
+.concept-card,.rule-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:20px}.concept-card h3,.rule-card h3{margin:0 0 7px;color:var(--primary);font-size:18px}.concept-card p,.rule-card p{margin:0;color:var(--muted);font-size:14px}.number{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--primary-soft);color:var(--primary);font-weight:800;margin-bottom:12px}.rule-symbol{font-size:24px;font-weight:800;color:var(--accent);margin-bottom:6px}.rule-card .formula{font-size:18px;margin:10px 0}
+.flow{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin:18px 0}.flow-box{padding:12px 15px;background:var(--primary-soft);border:1px solid #d8e5ef;color:var(--primary);border-radius:12px;font-weight:750}.flow-arrow{color:var(--muted);font-weight:800}.step-list{display:grid;gap:12px}.step{display:grid;grid-template-columns:42px 1fr;gap:13px;align-items:start}.step-badge{width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}.step h4{margin:0 0 3px;color:var(--primary)}.step p{margin:0;color:var(--muted);font-size:14px}.info-table{width:100%;border-collapse:collapse;margin-top:12px}.info-table th,.info-table td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}.info-table th{background:#f8fafc;color:var(--primary)}
+.button{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:700}.end-card{margin-top:44px;text-align:center;background:#fff;padding:32px;border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow)}.end-card h2{margin:0 0 7px;color:var(--primary)}.end-card p{color:var(--muted);margin:0 0 18px}footer{background:#fff;border-top:1px solid var(--border);padding:28px 20px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:900px){.grid-2,.grid-3,.interactive-grid{grid-template-columns:1fr}.hero h1{font-size:35px}}@media(max-width:700px){.nav{align-items:flex-start;flex-direction:column}.navlinks{gap:11px}.hero-card{padding:32px 23px}.hero h1{font-size:30px}.card{padding:20px}}
+
+.direction-pill{
+    display:inline-block;
+    margin-top:8px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#eef3f8;
+    color:#1f4e79;
+    font-size:13px;
+    font-weight:750;
+}
+.term-box{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:20px;
+}
+.term-box h3{
+    margin:0 0 8px;
+    color:var(--primary);
+}
+.term-box p{
+    margin:0;
+    color:var(--muted);
+}
+
+
+/* =========================
+   KASUS TURUNAN TIDAK ADA
+========================= */
+
+.derivative-case{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.derivative-case canvas{
+    margin:8px 0 4px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#fff;
+}
+
+.mini-conclusion{
+    margin-top:auto;
+    padding:12px 14px;
+    border-radius:10px;
+    background:#f8fafc;
+    border:1px solid var(--border);
+    font-size:13px;
+    line-height:1.55;
+}
+
+.mini-conclusion strong{
+    color:var(--primary);
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="topbar">
+    <div class="nav">
+        <div class="brand">
+            <a href="index.html">← Kalkulus Diferensial</a>
+        </div>
+        <div class="navlinks">
+            <a href="#dua-masalah">Gagasan Awal</a>
+            <a href="#definisi">Definisi</a>
+            <a href="#diferensiabilitas">Diferensiabilitas</a>
+            <a href="#notasi">Notasi</a>
+            <a href="#aturan">Aturan</a>
+            <a href="#trigonometri">Trigonometri</a>
+            <a href="#chain-rule">Chain Rule</a>
+            <a href="#lanjutan">Lanjutan</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-card">
+        <div class="badge">Bab 2 · Turunan</div>
+
+        <h1>Memahami Turunan</h1>
+
+        <p>
+            Pada bagian ini, kita akan memahami turunan melalui dua gagasan
+            yang saling berkaitan, yaitu kemiringan garis singgung dan laju
+            perubahan sesaat. Dari kedua gagasan tersebut, kita akan sampai
+            pada definisi turunan sebagai limit, kemudian mempelajari berbagai
+            aturan untuk menghitung turunan.
+        </p>
+
+        <div class="hero-path">
+            <div class="hero-step">1 · Garis Secant → Garis Singgung</div>
+            <div class="hero-step">2 · Kecepatan Rata-rata → Sesaat</div>
+            <div class="hero-step">3 · Definisi Turunan</div>
+            <div class="hero-step">4 · Diferensiabilitas & Notasi</div>
+            <div class="hero-step">5 · Aturan Turunan</div>
+            <div class="hero-step">6 · Materi Lanjutan</div>
+        </div>
+    </div>
+</section>
+
+<main class="container">
+
+<section class="section" id="dua-masalah">
+
+    <div class="section-title">
+        <div class="section-label">01 · Dua Masalah, Satu Tema</div>
+
+        <h2>Dari garis secant menuju garis singgung</h2>
+
+        <p>
+            Kita mulai dari masalah menentukan kemiringan garis singgung
+            pada suatu kurva. Gagasan yang sama nantinya akan muncul
+            kembali ketika kita menentukan kecepatan sesaat.
+        </p>
+    </div>
+
+
+    <div class="grid-2">
+
+        <div class="term-box">
+            <h3>Garis secant</h3>
+
+            <p>
+                Misalkan \(P=(a,f(a))\) dan
+                \(Q=(a+h,f(a+h))\) adalah dua titik berbeda pada grafik
+                \(y=f(x)\). Garis yang melalui \(P\) dan \(Q\)
+                disebut <strong>garis secant</strong>.
+            </p>
+
+            <div class="formula">
+                \[
+                \boxed{
+                m_{\text{secant}}
+                =
+                \frac{f(a+h)-f(a)}{h}
+                }
+                \qquad (h\neq0)
+                \]
+            </div>
+        </div>
+
+
+        <div class="term-box">
+            <h3>Garis singgung</h3>
+
+            <p>
+                Sekarang bayangkan titik \(Q\) bergerak semakin dekat
+                ke \(P\). Jika kemiringan garis-garis secant mendekati
+                suatu bilangan \(m\), maka garis melalui \(P\) dengan
+                kemiringan \(m\) disebut <strong>garis singgung</strong>
+                di \(P\).
+            </p>
+
+            <div class="formula">
+                \[
+                \boxed{
+                m_{\text{singgung}}
+                =
+                \lim_{h\to0}
+                \frac{f(a+h)-f(a)}{h}
+                }
+                \]
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="callout warning" style="margin-top:22px;">
+        <strong>Perhatikan:</strong>
+        perbedaan garis secant dan garis singgung bukan sekadar
+        “secant memotong dua titik, sedangkan garis singgung hanya
+        menyentuh satu titik”. Garis singgung ditentukan sebagai
+        posisi batas garis secant ketika titik \(Q\) mendekati \(P\).
+    </div>
+
+
+    <div class="section-title" style="margin-top:28px;">
+        <div class="section-label">Eksperimen 1</div>
+
+        <h2 style="font-size:24px;">
+            Gerakkan titik \(Q\) mendekati \(P\)
+        </h2>
+
+        <p>
+            Gunakan \(f(x)=x^2\) dengan titik tetap \(P=(1,1)\).
+            Titik kedua adalah
+            \[
+            Q=(1+h,(1+h)^2).
+            \]
+            Geser \(h\) dan amati perubahan garis secant.
+        </p>
+    </div>
+
+
+    <div class="interactive-grid">
+
+        <div class="control-panel">
+
+            <div class="control">
+                <h3>Nilai \(h\)</h3>
+
+                <p>
+                    Nilai \(h\) menentukan letak titik \(Q\)
+                    terhadap \(P\).
+                </p>
+
+                <input
+                    id="hSlider"
+                    type="range"
+                    min="-1.40"
+                    max="1.40"
+                    step="0.05"
+                    value="1.00"
+                >
+
+                <p>
+                    \(h=\)
+                    <span class="value-pill" id="hValue">1.00</span>
+                </p>
+
+                <div class="direction-pill" id="qDirection">
+                    \(h&gt;0\): \(Q\) berada di sebelah kanan \(P\)
+                </div>
+            </div>
+
+
+            <div class="control">
+                <h3>Kemiringan garis secant</h3>
+
+                <div class="formula" style="font-size:17px;">
+                    \[
+                    m_{\text{secant}}
+                    =
+                    \frac{(1+h)^2-1}{h}
+                    =
+                    2+h,
+                    \qquad h\neq0.
+                    \]
+                </div>
+
+                <p>
+                    Kemiringan saat ini:
+                    <span class="value-pill" id="slopeValue">3.00</span>
+                </p>
+            </div>
+
+
+            <div class="callout">
+                Jika \(h&gt;0\), titik \(Q\) berada di sebelah
+                kanan \(P\). Jika \(h&lt;0\), titik \(Q\) berada
+                di sebelah kiri \(P\).
+            </div>
+
+        </div>
+
+
+        <div class="graph-card">
+
+            <div class="graph-heading">
+                <h3>Grafik \(f(x)=x^2\)</h3>
+
+                <p>
+                    Garis biru adalah garis secant melalui \(P\) dan \(Q\).
+                    Garis putus-putus adalah garis singgung di \(P\).
+                </p>
+            </div>
+
+            <canvas id="secantGraph" width="900" height="520"></canvas>
+
+            <div class="observation" id="secantObservation">
+                Gerakkan \(Q\) semakin dekat ke \(P\), baik dari sebelah
+                kanan maupun dari sebelah kiri. Perhatikan bahwa kemiringan
+                garis secant mendekati \(2\).
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title" style="margin-top:32px;">
+        <div class="section-label">Masalah Kedua</div>
+
+        <h2 style="font-size:24px;">
+            Dari kecepatan rata-rata menuju kecepatan sesaat
+        </h2>
+
+        <p>
+            Misalkan posisi suatu benda pada waktu \(t\)
+            dinyatakan oleh \(s=f(t)\).
+        </p>
+    </div>
+
+
+    <div class="grid-2">
+
+        <div class="card">
+            <h3 style="color:#1f4e79;margin-top:0;">
+                Kecepatan rata-rata
+            </h3>
+
+            <p>
+                Pada selang waktu dari \(t\) sampai \(t+h\),
+                kecepatan rata-rata adalah
+            </p>
+
+            <div class="formula">
+                \[
+                \boxed{
+                v_{\text{rata-rata}}
+                =
+                \frac{f(t+h)-f(t)}{h}
+                }
+                \]
+            </div>
+
+            <p class="small">
+                Nilai ini menggunakan perubahan posisi selama
+                suatu selang waktu.
+            </p>
+        </div>
+
+
+        <div class="card">
+            <h3 style="color:#1f4e79;margin-top:0;">
+                Kecepatan sesaat
+            </h3>
+
+            <p>
+                Untuk memperoleh kecepatan pada tepat satu saat,
+                selang waktunya dibuat semakin kecil, yaitu
+                \(h\to0\).
+            </p>
+
+            <div class="formula">
+                \[
+                \boxed{
+                v(t)
+                =
+                \lim_{h\to0}
+                \frac{f(t+h)-f(t)}{h}
+                }
+                \]
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="callout success" style="margin-top:22px;">
+        <strong>Dua masalah, satu bentuk limit.</strong>
+
+        Kemiringan garis singgung dan kecepatan sesaat sama-sama
+        diperoleh dari limit
+
+        \[
+        \frac{f(x+h)-f(x)}{h}
+        \quad\text{ketika}\quad
+        h\to0.
+        \]
+
+        Bentuk inilah yang membawa kita pada konsep
+        <strong>turunan</strong>.
+    </div>
+
+</section>
+
+
+<section class="section" id="definisi">
+
+    <div class="section-title">
+        <div class="section-label">02 · Definisi Turunan</div>
+
+        <h2>Turunan sebagai limit hasil bagi selisih</h2>
+
+        <p>
+            Setelah melihat dua masalah sebelumnya, kita sekarang
+            mendefinisikan turunan secara umum.
+        </p>
+    </div>
+
+
+    <div class="card">
+
+        <div class="callout">
+            <strong>Definisi.</strong>
+            Turunan dari fungsi \(f\) adalah fungsi lain, yaitu \(f'\),
+            yang nilainya pada \(x\) diberikan oleh
+
+            <div class="formula">
+                \[
+                \boxed{
+                f'(x)
+                =
+                \lim_{h\to0}
+                \frac{f(x+h)-f(x)}{h}
+                }
+                \]
+            </div>
+
+            apabila limit tersebut ada.
+        </div>
+
+
+        <div class="grid-2" style="margin-top:22px;">
+
+            <div class="concept-card">
+                <h3>Apa arti \(h\to0\)?</h3>
+
+                <p>
+                    Titik kedua semakin mendekati titik pertama.
+                    Dalam hasil bagi selisih, \(h\) tidak sama dengan
+                    nol, tetapi nilainya dibuat semakin dekat ke nol.
+                </p>
+            </div>
+
+
+            <div class="concept-card">
+                <h3>Apa arti terdiferensialkan?</h3>
+
+                <p>
+                    Jika limit pada definisi tersebut ada pada suatu
+                    nilai \(x\), maka fungsi \(f\) dikatakan
+                    <strong>terdiferensialkan</strong> pada \(x\).
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:22px;">
+
+        <h3 style="color:#1f4e79;margin-top:0;">
+            Contoh · Menentukan turunan langsung dari definisi
+        </h3>
+
+        <p>Diberikan</p>
+
+        <div class="formula">
+            \[
+            f(x)=13x-6.
+            \]
+        </div>
+
+        <p>Gunakan definisi turunan:</p>
+
+        <div class="formula">
+            \[
+            \begin{aligned}
+            f'(x)
+            &=
+            \lim_{h\to0}
+            \frac{f(x+h)-f(x)}{h}\\[4pt]
+            &=
+            \lim_{h\to0}
+            \frac{[13(x+h)-6]-(13x-6)}{h}\\[4pt]
+            &=
+            \lim_{h\to0}
+            \frac{13h}{h}\\[4pt]
+            &=
+            13.
+            \end{aligned}
+            \]
+        </div>
+
+        <div class="callout success">
+            Jadi
+            \[
+            \boxed{f'(x)=13}.
+            \]
+            Kemiringan fungsi linear tersebut sama di setiap titik.
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:22px;">
+
+        <h3 style="color:#1f4e79;margin-top:0;">
+            Menghubungkan kembali dengan eksperimen
+        </h3>
+
+        <p>
+            Untuk \(f(x)=x^2\), definisi yang sama memberikan
+        </p>
+
+        <div class="formula">
+            \[
+            f'(x)=2x.
+            \]
+        </div>
+
+        <p>
+            Karena itu, pada \(x=1\),
+        </p>
+
+        <div class="formula">
+            \[
+            f'(1)=2.
+            \]
+        </div>
+
+        <p>
+            Nilai ini sama dengan kemiringan garis singgung
+            yang kita amati pada Eksperimen 1.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section" id="diferensiabilitas">
+
+    <div class="section-title">
+        <div class="section-label">
+            03 · Bentuk Ekuivalen dan Diferensiabilitas
+        </div>
+
+        <h2>
+            Bentuk lain definisi dan kapan turunan ada
+        </h2>
+
+        <p>
+            Definisi turunan dapat ditulis dalam beberapa bentuk
+            yang ekuivalen. Bentuk-bentuk ini membantu kita memahami
+            hubungan antara limit, garis singgung, dan diferensiabilitas.
+        </p>
+    </div>
+
+
+    <div class="grid-2">
+
+        <div class="concept-card">
+            <h3>Turunan di \(x=c\)</h3>
+
+            <div class="formula">
+                \[
+                \boxed{
+                f'(c)
+                =
+                \lim_{h\to0}
+                \frac{f(c+h)-f(c)}{h}
+                }
+                \]
+            </div>
+
+            <p>
+                Titik \(c\) tetap, sedangkan \(h\) mendekati nol.
+            </p>
+        </div>
+
+
+        <div class="concept-card">
+            <h3>Bentuk dengan \(x\to c\)</h3>
+
+            <div class="formula">
+                \[
+                \boxed{
+                f'(c)
+                =
+                \lim_{x\to c}
+                \frac{f(x)-f(c)}{x-c}
+                }
+                \]
+            </div>
+
+            <p>
+                Di sini \(x\) bergerak mendekati \(c\).
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:22px;">
+
+        <h3 style="color:#1f4e79;margin-top:0;">
+            Diferensiabilitas dan kontinuitas
+        </h3>
+
+        <p>
+            Jika \(f'(c)\) ada, maka \(f\) kontinu di \(c\).
+        </p>
+
+        <div class="formula">
+            \[
+            \boxed{
+            f\text{ terdiferensialkan di }c
+            \Longrightarrow
+            f\text{ kontinu di }c
+            }
+            \]
+        </div>
+
+        <div class="callout warning">
+            Kebalikannya tidak selalu benar. Suatu fungsi dapat
+            kontinu di sebuah titik, tetapi tidak mempunyai turunan
+            di titik tersebut.
+        </div>
+
+    </div>
+
+
+    <div class="section-title" style="margin-top:28px;">
+        <div class="section-label">
+            Kapan turunan tidak ada?
+        </div>
+
+        <h2 style="font-size:24px;">
+            Kenali apa yang menyebabkan turunan gagal ada
+        </h2>
+
+        <p>
+            Turunan di \(x=c\) tidak ada jika limit
+            \[
+            f'(c)
+            =
+            \lim_{h\to0}
+            \frac{f(c+h)-f(c)}{h}
+            \]
+            tidak menghasilkan satu nilai real berhingga.
+            Beberapa penyebab yang umum dapat dilihat dari bentuk grafik berikut.
+        </p>
+    </div>
+
+
+    <div class="grid-3">
+
+        <!-- KASUS 1 -->
+
+        <div class="concept-card derivative-case">
+
+            <div class="number">1</div>
+
+            <h3>
+                Fungsi tidak kontinu
+            </h3>
+
+            <canvas
+                id="discontinuousDerivativeGraph"
+                width="520"
+                height="330">
+            </canvas>
+
+            <div class="formula" style="font-size:16px;">
+                \[
+                f(x)=
+                \begin{cases}
+                0, & x&lt;0,\\
+                1, & x\ge0.
+                \end{cases}
+                \]
+            </div>
+
+            <p>
+                Grafik mengalami loncatan di \(x=0\).
+                Karena fungsi tidak kontinu di titik tersebut,
+                fungsi tidak mungkin terdiferensialkan di \(x=0\).
+            </p>
+
+            <div class="mini-conclusion">
+                <strong>Kesimpulan:</strong>
+                tidak kontinu \(\Rightarrow\) turunan tidak ada.
+            </div>
+
+        </div>
+
+
+        <!-- KASUS 2 -->
+
+        <div class="concept-card derivative-case">
+
+            <div class="number">2</div>
+
+            <h3>
+                Titik sudut
+            </h3>
+
+            <canvas
+                id="cornerDerivativeGraph"
+                width="520"
+                height="330">
+            </canvas>
+
+            <div class="formula" style="font-size:16px;">
+                \[
+                f(x)=|x|.
+                \]
+            </div>
+
+            <p>
+                Di \(x=0\), grafik membentuk sudut tajam.
+                Kemiringan dari kiri adalah \(-1\), sedangkan
+                kemiringan dari kanan adalah \(1\).
+            </p>
+
+            <div class="mini-conclusion">
+                <strong>Kesimpulan:</strong>
+                kemiringan kiri \(\neq\) kemiringan kanan,
+                sehingga \(f'(0)\) tidak ada.
+            </div>
+
+        </div>
+
+
+        <!-- KASUS 3 -->
+
+        <div class="concept-card derivative-case">
+
+            <div class="number">3</div>
+
+            <h3>
+                Garis singgung vertikal
+            </h3>
+
+            <canvas
+                id="verticalDerivativeGraph"
+                width="520"
+                height="330">
+            </canvas>
+
+            <div class="formula" style="font-size:16px;">
+                \[
+                f(x)=\sqrt[3]{x}.
+                \]
+            </div>
+
+            <p>
+                Ketika \(x\) mendekati \(0\), garis secant menjadi
+                semakin curam. Kemiringannya membesar tanpa batas,
+                sehingga tidak diperoleh turunan sebagai bilangan real
+                berhingga di \(x=0\).
+            </p>
+
+            <div class="mini-conclusion">
+                <strong>Kesimpulan:</strong>
+                kemiringan \(\to\infty\), sehingga turunan berhingga
+                tidak ada.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="callout" style="margin-top:22px;">
+        <strong>Gagasan yang perlu diingat:</strong>
+        agar \(f'(c)\) ada, kemiringan garis secant ketika mendekati
+        \(c\) dari kiri dan dari kanan harus menuju
+        <strong>satu nilai real berhingga yang sama</strong>.
+    </div>
+
+</section>
+
+
+<section class="section" id="notasi">
+
+    <div class="section-title">
+        <div class="section-label">
+            04 · Increments, Notasi, dan Fungsi Turunan
+        </div>
+
+        <h2>
+            Cara lain melihat hasil bagi selisih
+        </h2>
+
+        <p>
+            Perubahan pada variabel bebas dan variabel terikat
+            dapat dinyatakan dengan simbol \(\Delta x\) dan
+            \(\Delta y\).
+        </p>
+    </div>
+
+
+    <div class="card">
+
+        <p>
+            Jika \(y=f(x)\) dan \(x\) berubah menjadi
+            \(x+\Delta x\), maka perubahan pada \(y\) adalah
+        </p>
+
+        <div class="formula">
+            \[
+            \boxed{
+            \Delta y
+            =
+            f(x+\Delta x)-f(x)
+            }.
+            \]
+        </div>
+
+        <p>Karena itu,</p>
+
+        <div class="formula">
+            \[
+            \frac{\Delta y}{\Delta x}
+            =
+            \frac{f(x+\Delta x)-f(x)}{\Delta x}
+            \]
+        </div>
+
+        <p>
+            menyatakan kemiringan garis secant. Ketika
+            \(\Delta x\to0\), diperoleh
+        </p>
+
+        <div class="formula">
+            \[
+            \boxed{
+            \frac{dy}{dx}
+            =
+            \lim_{\Delta x\to0}
+            \frac{\Delta y}{\Delta x}
+            }.
+            \]
+        </div>
+
+    </div>
+
+
+    <div class="grid-3" style="margin-top:22px;">
+
+        <div class="concept-card">
+            <h3>Notasi prima</h3>
+
+            <div class="formula">
+                \[
+                f'(x)
+                \]
+            </div>
+
+            <p>Dibaca “\(f\) prima dari \(x\)”.</p>
+        </div>
+
+
+        <div class="concept-card">
+            <h3>Notasi Leibniz</h3>
+
+            <div class="formula">
+                \[
+                \frac{dy}{dx}
+                \]
+            </div>
+
+            <p>
+                Menunjukkan turunan \(y\) terhadap \(x\).
+            </p>
+        </div>
+
+
+        <div class="concept-card">
+            <h3>Notasi operator</h3>
+
+            <div class="formula">
+                \[
+                D_x f
+                \]
+            </div>
+
+            <p>
+                \(D_x\) menyatakan operasi diferensiasi
+                terhadap \(x\).
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="callout" style="margin-top:22px;">
+        <strong>Ingat:</strong>
+        turunan bukan hanya sebuah bilangan. Ketika kita menghitung
+        \(f'(x)\) untuk setiap \(x\) yang memungkinkan, kita memperoleh
+        fungsi baru yang disebut <strong>fungsi turunan</strong>.
+    </div>
+
+</section>
+<section class="section" id="aturan"><div class="section-title"><div class="section-label">05 · Aturan Dasar Turunan</div><h2>Menghitung turunan tanpa kembali ke definisi setiap kali</h2><p>Definisi limit adalah dasar turunan. Aturan berikut membuat perhitungan lebih efisien.</p></div>
+<div class="grid-3"><div class="rule-card"><div class="rule-symbol">A</div><h3>Aturan konstanta</h3><div class="formula">\[\frac{d}{dx}(c)=0\]</div></div><div class="rule-card"><div class="rule-symbol">B</div><h3>Fungsi identitas</h3><div class="formula">\[\frac{d}{dx}(x)=1\]</div></div><div class="rule-card"><div class="rule-symbol">C</div><h3>Aturan pangkat</h3><div class="formula">\[\boxed{\frac{d}{dx}(x^n)=nx^{n-1}}\]</div></div><div class="rule-card"><div class="rule-symbol">D</div><h3>Kelipatan konstanta</h3><div class="formula">\[(kf)'=kf'\]</div></div><div class="rule-card"><div class="rule-symbol">E</div><h3>Penjumlahan / pengurangan</h3><div class="formula">\[(f\pm g)'=f'\pm g'\]</div></div><div class="rule-card"><div class="rule-symbol">F</div><h3>Aturan hasil kali</h3><div class="formula">\[\boxed{(fg)'=f'g+fg'}\]</div></div></div>
+<div class="grid-2" style="margin-top:16px"><div class="rule-card"><h3>Aturan hasil bagi</h3><div class="formula">\[\boxed{\left(\frac{f}{g}\right)'=\frac{f'g-fg'}{g^2}},\qquad g\neq0\]</div></div><div class="rule-card"><h3>Pangkat negatif</h3><div class="formula">\[\frac{d}{dx}(x^{-n})=-nx^{-n-1}\]</div></div></div>
+<div class="card" style="margin-top:22px"><h3 style="color:#1f4e79;margin-top:0">Contoh · Turunkan fungsi polinom</h3><div class="formula">\[y=5x^3+7x-6\]</div><div class="formula">\[\begin{aligned}y'&=5(3x^2)+7(1)-0\\&=\boxed{15x^2+7}.\end{aligned}\]</div></div>
+</section>
+
+<section class="section" id="trigonometri"><div class="section-title"><div class="section-label">06 · Turunan Fungsi Trigonometri</div><h2>Bagaimana kemiringan fungsi sinus dan cosinus berubah?</h2><p>Rumus turunan fungsi trigonometri dapat dikembangkan dari definisi turunan dan limit trigonometri.</p></div>
+<div class="grid-3"><div class="rule-card"><h3>Sinus</h3><div class="formula">\[\boxed{\frac{d}{dx}(\sin x)=\cos x}\]</div></div><div class="rule-card"><h3>Cosinus</h3><div class="formula">\[\boxed{\frac{d}{dx}(\cos x)=-\sin x}\]</div></div><div class="rule-card"><h3>Tangen</h3><div class="formula">\[\boxed{\frac{d}{dx}(\tan x)=\sec^2x}\]</div></div><div class="rule-card"><h3>Cotangen</h3><div class="formula">\[\frac{d}{dx}(\cot x)=-\csc^2x\]</div></div><div class="rule-card"><h3>Secan</h3><div class="formula">\[\frac{d}{dx}(\sec x)=\sec x\tan x\]</div></div><div class="rule-card"><h3>Cosecan</h3><div class="formula">\[\frac{d}{dx}(\csc x)=-\csc x\cot x\]</div></div></div>
+<div class="section-title" style="margin-top:28px"><div class="section-label">Eksperimen 2</div><h2 style="font-size:24px">Amati kemiringan grafik \(y=\sin x\)</h2><p>Geser titik pada grafik. Nilai kemiringan garis singgung di \(x\) sama dengan \(\cos x\).</p></div>
+<div class="interactive-grid"><div class="control-panel"><div class="control"><h3>Posisi \(x\)</h3><input id="sinXSlider" type="range" min="-3.14" max="3.14" step="0.02" value="0"><p>\(x=\) <span class="value-pill" id="sinXValue">0.00</span></p></div><div class="control"><h3>Kemiringan tangent</h3><p>Karena \[\frac{d}{dx}(\sin x)=\cos x,\] kemiringannya adalah</p><p style="text-align:center"><span class="value-pill" id="cosValue">1.00</span></p></div><div class="callout">Ketika \(\cos x>0\), grafik sinus naik. Ketika \(\cos x<0\), grafik sinus turun.</div></div><div class="graph-card"><div class="graph-heading"><h3>Grafik sinus dan garis singgung</h3><p>Titik merah menunjukkan posisi \(x\) yang dipilih.</p></div><canvas id="sinGraph" width="900" height="500"></canvas></div></div>
+</section>
+
+<section class="section" id="chain-rule"><div class="section-title"><div class="section-label">07 · Aturan Rantai</div><h2>Menurunkan fungsi komposisi</h2><p>Jika suatu fungsi tersusun dari fungsi “luar” dan fungsi “dalam”, gunakan aturan rantai.</p></div>
+<div class="card"><div class="callout purple">Jika \[y=f(u),\qquad u=g(x),\] maka<div class="formula">\[\boxed{\frac{dy}{dx}=\frac{dy}{du}\frac{du}{dx}}\]</div>atau<div class="formula">\[\boxed{(f\circ g)'(x)=f'(g(x))g'(x)}.\]</div></div><div class="flow"><div class="flow-box">\(x\)</div><div class="flow-arrow">→</div><div class="flow-box">\(u=2x+1\)</div><div class="flow-arrow">→</div><div class="flow-box">\(y=u^5\)</div></div><h3 style="color:#1f4e79">Contoh · \(y=(2x+1)^5\)</h3><div class="formula">\[\begin{aligned}\frac{dy}{dx}&=5(2x+1)^4\frac{d}{dx}(2x+1)\\&=5(2x+1)^4(2)\\&=\boxed{10(2x+1)^4}.\end{aligned}\]</div><div class="callout"><strong>Turunkan fungsi luar, pertahankan fungsi dalam, lalu kalikan dengan turunan fungsi dalam.</strong></div></div>
+</section>
+
+<section class="section" id="lanjutan"><div class="section-title"><div class="section-label">08 · Turunan Tingkat Tinggi</div><h2>Turunan dari turunan</h2><p>Setelah memperoleh \(f'\), kita dapat menurunkannya lagi untuk memperoleh \(f''\), \(f'''\), dan seterusnya.</p></div>
+<div class="grid-2"><div class="card"><h3 style="color:#1f4e79;margin-top:0">Notasi</h3><table class="info-table"><thead><tr><th>Tingkat</th><th>Notasi</th></tr></thead><tbody><tr><td>Pertama</td><td>\(f'(x)\), \(\dfrac{dy}{dx}\)</td></tr><tr><td>Kedua</td><td>\(f''(x)\), \(\dfrac{d^2y}{dx^2}\)</td></tr><tr><td>Ketiga</td><td>\(f'''(x)\), \(\dfrac{d^3y}{dx^3}\)</td></tr><tr><td>Ke-\(n\)</td><td>\(f^{(n)}(x)\), \(\dfrac{d^ny}{dx^n}\)</td></tr></tbody></table></div><div class="card"><h3 style="color:#1f4e79;margin-top:0">Posisi, kecepatan, dan percepatan</h3><p>Jika posisi benda adalah \(s(t)\), maka</p><div class="formula">\[\boxed{v(t)=s'(t)}\]</div><p>dan percepatannya</p><div class="formula">\[\boxed{a(t)=v'(t)=s''(t)}.\]</div></div></div>
+<div class="card" style="margin-top:22px"><h3 style="color:#1f4e79;margin-top:0">Contoh</h3><div class="formula">\[s(t)=2t^2-12t+8.\]</div><div class="formula">\[v(t)=s'(t)=4t-12,\qquad a(t)=s''(t)=4.\]</div></div>
+</section>
+
+<section class="section" id="implisit"><div class="section-title"><div class="section-label">09 · Diferensiasi Implisit</div><h2>Ketika \(y\) tidak mudah ditulis sebagai fungsi eksplisit</h2><p>Kita dapat menurunkan kedua sisi persamaan terhadap \(x\) sambil mengingat bahwa \(y\) adalah fungsi dari \(x\).</p></div>
+<div class="grid-2"><div class="card"><h3 style="color:#1f4e79;margin-top:0">Contoh · Lingkaran</h3><div class="formula">\[x^2+y^2=25.\]</div><p>Turunkan kedua sisi terhadap \(x\):</p><div class="formula">\[2x+2y\frac{dy}{dx}=0.\]</div><p>Maka</p><div class="formula">\[\boxed{\frac{dy}{dx}=-\frac{x}{y}}.\]</div></div><div class="card"><h3 style="color:#1f4e79;margin-top:0">Mengapa muncul \(\dfrac{dy}{dx}\)?</h3><p>Saat menurunkan \(y^2\), kita tidak boleh memperlakukan \(y\) sebagai konstanta karena \(y\) bergantung pada \(x\).</p><div class="formula">\[\frac{d}{dx}(y^2)=2y\frac{dy}{dx}.\]</div><div class="callout warning">Ini merupakan penggunaan <strong>aturan rantai</strong>.</div></div></div>
+</section>
+
+<section class="section" id="related-rates"><div class="section-title"><div class="section-label">10 · Laju Terkait</div><h2>Ketika beberapa besaran berubah terhadap waktu</h2><p>Jika beberapa variabel terhubung oleh satu persamaan, perubahan salah satu variabel akan terkait dengan perubahan variabel lainnya.</p></div>
+<div class="grid-2"><div class="card"><h3 style="color:#1f4e79;margin-top:0">Gagasan utama</h3><p>Jika \(x\) dan \(y\) sama-sama bergantung pada waktu \(t\), kita menurunkan persamaan yang menghubungkan keduanya terhadap \(t\).</p><div class="formula">\[\frac{d}{dt}[\text{hubungan antara }x\text{ dan }y]\]</div><div class="callout">Tujuan akhirnya adalah menghubungkan \(\dfrac{dx}{dt}\) dengan \(\dfrac{dy}{dt}\).</div></div>
+<div class="card"><h3 style="color:#1f4e79;margin-top:0">Prosedur sistematis</h3><div class="step-list"><div class="step"><div class="step-badge">1</div><div><h4>Gambar dan tentukan variabel</h4><p>Tentukan besaran yang berubah terhadap waktu.</p></div></div><div class="step"><div class="step-badge">2</div><div><h4>Catat yang diketahui dan yang dicari</h4><p>Misalnya diketahui \(dx/dt\) dan dicari \(dy/dt\).</p></div></div><div class="step"><div class="step-badge">3</div><div><h4>Tulis persamaan penghubung</h4><p>Gunakan hubungan geometri atau fisika yang sesuai.</p></div></div><div class="step"><div class="step-badge">4</div><div><h4>Diferensiasikan terhadap waktu</h4><p>Gunakan aturan rantai bila diperlukan.</p></div></div><div class="step"><div class="step-badge">5</div><div><h4>Substitusikan data pada saat yang diminta</h4><p>Masukkan nilai numerik setelah proses diferensiasi.</p></div></div></div></div></div>
+<div class="card" style="margin-top:22px"><h3 style="color:#1f4e79;margin-top:0">Contoh sederhana · Lingkaran yang membesar</h3><p>Misalkan jari-jari lingkaran \(r\) bertambah terhadap waktu. Luasnya</p><div class="formula">\[A=\pi r^2.\]</div><p>Turunkan terhadap \(t\):</p><div class="formula">\[\boxed{\frac{dA}{dt}=2\pi r\frac{dr}{dt}}.\]</div><div class="callout success">Rumus tersebut menghubungkan laju perubahan luas dengan laju perubahan jari-jari.</div></div>
+</section>
+
+<section class="section" id="ringkasan"><div class="section-title"><div class="section-label">Ringkasan</div><h2>Gagasan utama yang perlu diingat</h2></div><div class="grid-2"><div class="concept-card"><div class="number">1</div><h3>Turunan lahir dari limit</h3><p>Turunan adalah limit dari hasil bagi selisih, bukan sekadar kumpulan aturan aljabar.</p></div><div class="concept-card"><div class="number">2</div><h3>Turunan adalah kemiringan dan laju perubahan</h3><p>Secara geometris ia adalah kemiringan garis singgung; dalam aplikasi ia menyatakan laju perubahan sesaat.</p></div><div class="concept-card"><div class="number">3</div><h3>Aturan turunan mempercepat perhitungan</h3><p>Aturan pangkat, hasil kali, hasil bagi, dan aturan rantai menghindarkan kita dari mengulang definisi limit setiap kali.</p></div><div class="concept-card"><div class="number">4</div><h3>Turunan dapat diperluas ke banyak konteks</h3><p>Turunan tingkat tinggi, diferensiasi implisit, dan laju terkait memperluas penggunaan konsep turunan.</p></div></div></section>
+
+<div class="end-card"><h2>Selesai mempelajari dasar-dasar turunan</h2><p>Setelah konsep dan aturan turunan dipahami, materi berikutnya dapat dilanjutkan ke aplikasi turunan.</p><a class="button" href="index.html">Kembali ke Beranda</a></div>
+</main>
+<footer>Media Pembelajaran · Kalkulus Diferensial</footer>
+
+
+<script>
+function drawLine(ctx,x1,y1,x2,y2,color="#dfe6ee",width=1,dash=[]){
+    ctx.save();
+    ctx.strokeStyle=color;
+    ctx.lineWidth=width;
+    ctx.setLineDash(dash);
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+    ctx.restore();
+}
+
+function drawCircle(ctx,x,y,r,fill,stroke=null,width=1){
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,Math.PI*2);
+
+    if(fill){
+        ctx.fillStyle=fill;
+        ctx.fill();
+    }
+
+    if(stroke){
+        ctx.strokeStyle=stroke;
+        ctx.lineWidth=width;
+        ctx.stroke();
+    }
+
+    ctx.restore();
+}
+
+
+/* =========================================================
+   EXPERIMEN 1: GARIS SECANT -> GARIS SINGGUNG
+========================================================= */
+
+const secantCanvas=document.getElementById("secantGraph");
+const secantCtx=secantCanvas.getContext("2d");
+const hSlider=document.getElementById("hSlider");
+const hValue=document.getElementById("hValue");
+const slopeValue=document.getElementById("slopeValue");
+const qDirection=document.getElementById("qDirection");
+const secantObservation=document.getElementById("secantObservation");
+
+function secantMapX(x){
+    const xmin=-1.5,xmax=3.5;
+    return 60+(x-xmin)/(xmax-xmin)*(secantCanvas.width-100);
+}
+
+function secantMapY(y){
+    const ymin=-1,ymax=10;
+    return secantCanvas.height-45-(y-ymin)/(ymax-ymin)*(secantCanvas.height-80);
+}
+
+function fParabola(x){
+    return x*x;
+}
+
+function drawSecantGraph(){
+
+    const ctx=secantCtx;
+
+    ctx.clearRect(0,0,secantCanvas.width,secantCanvas.height);
+    ctx.fillStyle="#fff";
+    ctx.fillRect(0,0,secantCanvas.width,secantCanvas.height);
+
+    for(let x=-1;x<=3;x++){
+        drawLine(
+            ctx,
+            secantMapX(x),
+            35,
+            secantMapX(x),
+            secantCanvas.height-45,
+            "#edf1f5"
+        );
+    }
+
+    for(let y=0;y<=10;y+=2){
+        drawLine(
+            ctx,
+            60,
+            secantMapY(y),
+            secantCanvas.width-40,
+            secantMapY(y),
+            "#edf1f5"
+        );
+    }
+
+    drawLine(
+        ctx,
+        60,
+        secantMapY(0),
+        secantCanvas.width-40,
+        secantMapY(0),
+        "#49515a",
+        2
+    );
+
+    drawLine(
+        ctx,
+        secantMapX(0),
+        35,
+        secantMapX(0),
+        secantCanvas.height-45,
+        "#49515a",
+        2
+    );
+
+    ctx.strokeStyle="#1f4e79";
+    ctx.lineWidth=4;
+    ctx.beginPath();
+
+    let started=false;
+
+    for(let x=-1.4;x<=3.2;x+=0.01){
+
+        const y=fParabola(x);
+
+        if(y>10){
+            started=false;
+            continue;
+        }
+
+        const px=secantMapX(x);
+        const py=secantMapY(y);
+
+        if(!started){
+            ctx.moveTo(px,py);
+            started=true;
+        }else{
+            ctx.lineTo(px,py);
+        }
+    }
+
+    ctx.stroke();
+
+    const a=1;
+    const yp=fParabola(a);
+    const h=parseFloat(hSlider.value);
+    const xq=a+h;
+    const yq=fParabola(xq);
+
+    /* garis singgung y - 1 = 2(x - 1) */
+    const mTangent=2;
+    const tx1=-1.1;
+    const tx2=3.0;
+    const ty1=yp+mTangent*(tx1-a);
+    const ty2=yp+mTangent*(tx2-a);
+
+    drawLine(
+        ctx,
+        secantMapX(tx1),
+        secantMapY(ty1),
+        secantMapX(tx2),
+        secantMapY(ty2),
+        "#7d8792",
+        2,
+        [8,7]
+    );
+
+    drawCircle(
+        ctx,
+        secantMapX(a),
+        secantMapY(yp),
+        8,
+        "#e74c3c"
+    );
+
+    ctx.font="15px Arial";
+    ctx.fillStyle="#374151";
+
+    ctx.fillText(
+        "P(1,1)",
+        secantMapX(a)+10,
+        secantMapY(yp)-10
+    );
+
+    if(Math.abs(h)<0.000001){
+
+        hValue.textContent="0.00";
+        slopeValue.textContent="—";
+        qDirection.textContent="h = 0: Q berimpit dengan P";
+
+        secantObservation.innerHTML =
+            "Pada \\(h=0\\), titik \\(Q\\) berimpit dengan \\(P\\), sehingga garis secant tidak ditentukan. " +
+            "Yang kita perlukan adalah nilai \\(h\\) yang <strong>mendekati</strong> 0, bukan sama dengan 0.";
+
+        if(window.MathJax && MathJax.typesetPromise){
+            MathJax.typesetPromise([secantObservation]).catch(()=>{});
+        }
+
+        return;
+    }
+
+    const mSecant=(yq-yp)/(xq-a);
+
+    const sx1=-1.0;
+    const sx2=3.0;
+    const sy1=yp+mSecant*(sx1-a);
+    const sy2=yp+mSecant*(sx2-a);
+
+    drawLine(
+        ctx,
+        secantMapX(sx1),
+        secantMapY(sy1),
+        secantMapX(sx2),
+        secantMapY(sy2),
+        "#2f80ed",
+        3
+    );
+
+    drawCircle(
+        ctx,
+        secantMapX(xq),
+        secantMapY(yq),
+        8,
+        "#f39c12"
+    );
+
+    ctx.fillStyle="#374151";
+
+    ctx.fillText(
+        "Q",
+        secantMapX(xq)+10,
+        secantMapY(yq)-10
+    );
+
+    hValue.textContent=h.toFixed(2);
+    slopeValue.textContent=mSecant.toFixed(2);
+
+    if(h>0){
+        qDirection.innerHTML=
+            "\\(h&gt;0\\): \\(Q\\) berada di sebelah kanan \\(P\\)";
+    }else{
+        qDirection.innerHTML=
+            "\\(h&lt;0\\): \\(Q\\) berada di sebelah kiri \\(P\\)";
+    }
+
+    secantObservation.innerHTML =
+        "Gerakkan \\(Q\\) semakin dekat ke \\(P\\), baik dari sebelah kanan maupun dari sebelah kiri. " +
+        "Perhatikan bahwa kemiringan garis secant mendekati \\(2\\).";
+
+    if(window.MathJax && MathJax.typesetPromise){
+        MathJax.typesetPromise(
+            [qDirection,secantObservation]
+        ).catch(()=>{});
+    }
+}
+
+hSlider.addEventListener("input",drawSecantGraph);
+
+
+/* =========================================================
+   EXPERIMEN 2: SINUS & GARIS SINGGUNG
+========================================================= */
+
+const sinCanvas=document.getElementById("sinGraph");
+const sinCtx=sinCanvas.getContext("2d");
+const sinXSlider=document.getElementById("sinXSlider");
+const sinXValue=document.getElementById("sinXValue");
+const cosValue=document.getElementById("cosValue");
+
+function sinMapX(x){
+    const xmin=-Math.PI,xmax=Math.PI;
+    return 55+(x-xmin)/(xmax-xmin)*(sinCanvas.width-95);
+}
+
+function sinMapY(y){
+    const ymin=-1.6,ymax=1.6;
+    return sinCanvas.height-40-(y-ymin)/(ymax-ymin)*(sinCanvas.height-75);
+}
+
+function drawSinGraph(){
+
+    const ctx=sinCtx;
+
+    ctx.clearRect(0,0,sinCanvas.width,sinCanvas.height);
+    ctx.fillStyle="#fff";
+    ctx.fillRect(0,0,sinCanvas.width,sinCanvas.height);
+
+    [-Math.PI,-Math.PI/2,0,Math.PI/2,Math.PI].forEach(
+        x=>drawLine(
+            ctx,
+            sinMapX(x),
+            30,
+            sinMapX(x),
+            sinCanvas.height-40,
+            "#edf1f5"
+        )
+    );
+
+    [-1,-.5,0,.5,1].forEach(
+        y=>drawLine(
+            ctx,
+            55,
+            sinMapY(y),
+            sinCanvas.width-40,
+            sinMapY(y),
+            "#edf1f5"
+        )
+    );
+
+    drawLine(
+        ctx,
+        55,
+        sinMapY(0),
+        sinCanvas.width-40,
+        sinMapY(0),
+        "#49515a",
+        2
+    );
+
+    drawLine(
+        ctx,
+        sinMapX(0),
+        30,
+        sinMapX(0),
+        sinCanvas.height-40,
+        "#49515a",
+        2
+    );
+
+    ctx.strokeStyle="#1f4e79";
+    ctx.lineWidth=4;
+    ctx.beginPath();
+
+    for(let x=-Math.PI;x<=Math.PI;x+=0.01){
+        const y=Math.sin(x);
+        const px=sinMapX(x);
+        const py=sinMapY(y);
+
+        if(x===-Math.PI){
+            ctx.moveTo(px,py);
+        }else{
+            ctx.lineTo(px,py);
+        }
+    }
+
+    ctx.stroke();
+
+    const x0=parseFloat(sinXSlider.value);
+    const y0=Math.sin(x0);
+    const m=Math.cos(x0);
+
+    let x1=Math.max(-Math.PI,x0-1.2);
+    let x2=Math.min(Math.PI,x0+1.2);
+
+    const y1=y0+m*(x1-x0);
+    const y2=y0+m*(x2-x0);
+
+    drawLine(
+        ctx,
+        sinMapX(x1),
+        sinMapY(y1),
+        sinMapX(x2),
+        sinMapY(y2),
+        "#2f80ed",
+        3
+    );
+
+    drawCircle(
+        ctx,
+        sinMapX(x0),
+        sinMapY(y0),
+        8,
+        "#e74c3c"
+    );
+
+    ctx.font="14px Arial";
+    ctx.fillStyle="#6b7280";
+
+    ctx.fillText("-π",sinMapX(-Math.PI)-8,sinMapY(0)+22);
+    ctx.fillText("-π/2",sinMapX(-Math.PI/2)-16,sinMapY(0)+22);
+    ctx.fillText("0",sinMapX(0)+5,sinMapY(0)+22);
+    ctx.fillText("π/2",sinMapX(Math.PI/2)-10,sinMapY(0)+22);
+    ctx.fillText("π",sinMapX(Math.PI)-6,sinMapY(0)+22);
+
+    sinXValue.textContent=x0.toFixed(2);
+    cosValue.textContent=m.toFixed(2);
+}
+
+sinXSlider.addEventListener("input",drawSinGraph);
+
+
+/* =========================================================
+   GRAFIK: KAPAN TURUNAN TIDAK ADA?
+========================================================= */
+
+function drawBasicAxes(ctx, canvas, xmin, xmax, ymin, ymax){
+
+    const left=38, right=18, top=18, bottom=35;
+
+    const mapX=x =>
+        left+(x-xmin)/(xmax-xmin)*(canvas.width-left-right);
+
+    const mapY=y =>
+        canvas.height-bottom-(y-ymin)/(ymax-ymin)*
+        (canvas.height-top-bottom);
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#ffffff";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    /* grid */
+    for(let x=Math.ceil(xmin);x<=Math.floor(xmax);x++){
+        drawLine(
+            ctx,
+            mapX(x),
+            top,
+            mapX(x),
+            canvas.height-bottom,
+            "#edf1f5",
+            1
+        );
+    }
+
+    for(let y=Math.ceil(ymin);y<=Math.floor(ymax);y++){
+        drawLine(
+            ctx,
+            left,
+            mapY(y),
+            canvas.width-right,
+            mapY(y),
+            "#edf1f5",
+            1
+        );
+    }
+
+    /* axes */
+    if(ymin<=0 && ymax>=0){
+        drawLine(
+            ctx,
+            left,
+            mapY(0),
+            canvas.width-right,
+            mapY(0),
+            "#59616a",
+            1.5
+        );
+    }
+
+    if(xmin<=0 && xmax>=0){
+        drawLine(
+            ctx,
+            mapX(0),
+            top,
+            mapX(0),
+            canvas.height-bottom,
+            "#59616a",
+            1.5
+        );
+    }
+
+    ctx.fillStyle="#6b7280";
+    ctx.font="12px Arial";
+
+    if(ymin<=0 && ymax>=0){
+        for(let x=Math.ceil(xmin);x<=Math.floor(xmax);x++){
+            if(x===0) continue;
+            ctx.fillText(
+                String(x),
+                mapX(x)-4,
+                mapY(0)+17
+            );
+        }
+    }
+
+    if(xmin<=0 && xmax>=0){
+        for(let y=Math.ceil(ymin);y<=Math.floor(ymax);y++){
+            if(y===0) continue;
+            ctx.fillText(
+                String(y),
+                mapX(0)+7,
+                mapY(y)+4
+            );
+        }
+    }
+
+    return {mapX,mapY,left,right,top,bottom};
+}
+
+
+/* 1. Fungsi tidak kontinu */
+
+function drawDiscontinuousDerivativeGraph(){
+
+    const canvas=
+        document.getElementById("discontinuousDerivativeGraph");
+
+    if(!canvas) return;
+
+    const ctx=canvas.getContext("2d");
+    const {mapX,mapY}=drawBasicAxes(
+        ctx,
+        canvas,
+        -2.5,2.5,
+        -1.2,2.2
+    );
+
+    /* cabang kiri y=0 */
+    drawLine(
+        ctx,
+        mapX(-2.2),
+        mapY(0),
+        mapX(0),
+        mapY(0),
+        "#1f4e79",
+        4
+    );
+
+    /* cabang kanan y=1 */
+    drawLine(
+        ctx,
+        mapX(0),
+        mapY(1),
+        mapX(2.2),
+        mapY(1),
+        "#2f80ed",
+        4
+    );
+
+    /* titik terbuka pada (0,0) */
+    drawCircle(
+        ctx,
+        mapX(0),
+        mapY(0),
+        7,
+        "#ffffff",
+        "#1f4e79",
+        3
+    );
+
+    /* titik tertutup pada (0,1) */
+    drawCircle(
+        ctx,
+        mapX(0),
+        mapY(1),
+        7,
+        "#2f80ed",
+        "#2f80ed",
+        2
+    );
+
+    ctx.fillStyle="#374151";
+    ctx.font="13px Arial";
+
+    ctx.fillText(
+        "loncatan",
+        mapX(0)+12,
+        mapY(0.5)+4
+    );
+}
+
+
+/* 2. Titik sudut: y=|x| */
+
+function drawCornerDerivativeGraph(){
+
+    const canvas=
+        document.getElementById("cornerDerivativeGraph");
+
+    if(!canvas) return;
+
+    const ctx=canvas.getContext("2d");
+    const {mapX,mapY}=drawBasicAxes(
+        ctx,
+        canvas,
+        -2.5,2.5,
+        -0.7,2.7
+    );
+
+    ctx.strokeStyle="#1f4e79";
+    ctx.lineWidth=4;
+    ctx.beginPath();
+
+    for(let x=-2.3;x<=2.3;x+=0.02){
+
+        const y=Math.abs(x);
+
+        if(x===-2.3){
+            ctx.moveTo(mapX(x),mapY(y));
+        }else{
+            ctx.lineTo(mapX(x),mapY(y));
+        }
+    }
+
+    ctx.stroke();
+
+    drawCircle(
+        ctx,
+        mapX(0),
+        mapY(0),
+        6,
+        "#e74c3c"
+    );
+
+    /* garis bantu kemiringan kiri dan kanan */
+    drawLine(
+        ctx,
+        mapX(-1.5),
+        mapY(1.5),
+        mapX(0),
+        mapY(0),
+        "#d68910",
+        2,
+        [6,5]
+    );
+
+    drawLine(
+        ctx,
+        mapX(0),
+        mapY(0),
+        mapX(1.5),
+        mapY(1.5),
+        "#2f80ed",
+        2,
+        [6,5]
+    );
+
+    ctx.fillStyle="#374151";
+    ctx.font="12px Arial";
+
+    ctx.fillText(
+        "m kiri = -1",
+        mapX(-2.1),
+        mapY(2.0)
+    );
+
+    ctx.fillText(
+        "m kanan = 1",
+        mapX(0.65),
+        mapY(2.0)
+    );
+}
+
+
+/* 3. Garis singgung vertikal: y=cuberoot(x) */
+
+function drawVerticalDerivativeGraph(){
+
+    const canvas=
+        document.getElementById("verticalDerivativeGraph");
+
+    if(!canvas) return;
+
+    const ctx=canvas.getContext("2d");
+    const {mapX,mapY}=drawBasicAxes(
+        ctx,
+        canvas,
+        -2.5,2.5,
+        -1.7,1.7
+    );
+
+    ctx.strokeStyle="#1f4e79";
+    ctx.lineWidth=4;
+    ctx.beginPath();
+
+    let started=false;
+
+    for(let x=-2.3;x<=2.3;x+=0.01){
+
+        const y=Math.cbrt(x);
+
+        if(!started){
+            ctx.moveTo(mapX(x),mapY(y));
+            started=true;
+        }else{
+            ctx.lineTo(mapX(x),mapY(y));
+        }
+    }
+
+    ctx.stroke();
+
+    /* garis singgung vertikal di x=0 */
+    drawLine(
+        ctx,
+        mapX(0),
+        mapY(-1.45),
+        mapX(0),
+        mapY(1.45),
+        "#e74c3c",
+        2.5,
+        [7,5]
+    );
+
+    drawCircle(
+        ctx,
+        mapX(0),
+        mapY(0),
+        6,
+        "#e74c3c"
+    );
+
+    ctx.fillStyle="#374151";
+    ctx.font="12px Arial";
+
+    ctx.fillText(
+        "garis singgung vertikal",
+        mapX(0)+9,
+        mapY(1.35)
+    );
+}
+
+
+drawSecantGraph();
+drawSinGraph();
+drawDiscontinuousDerivativeGraph();
+drawCornerDerivativeGraph();
+drawVerticalDerivativeGraph();
+</script>
+
+</body>
+</html>
